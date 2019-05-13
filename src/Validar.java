@@ -1,11 +1,13 @@
 
    
 import java.io.*;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 
 public class Validar {   
  
    private BufferedReader br= new BufferedReader( new InputStreamReader(System.in));
-   public Validar() throws IOException {
+   public Validar(){
    }
    public int validarInt(String k, int x, int y) {
        int c=0;
@@ -149,7 +151,7 @@ public class Validar {
                     l++;}
            }
            if((l!=txt.length()) || (b<y || b>z)){ 
-                System.out.print(b+"Tente Novamente: ");
+                System.out.print("Tente Novamente: ");
                 txt=br.readLine();}
          }while((l!=txt.length()) || (b<y || b>z));
         }catch(IndexOutOfBoundsException ie){System.out.print(ie.getMessage());}
@@ -164,6 +166,27 @@ public class Validar {
       }catch(IOException io){System.out.print(io.getMessage());}
      return x;
      
+    }
+    public String validarData(String txt, int anoMin,int anoMax){
+    StringTokenizer str;
+    String data="";
+    byte dd,mm;
+    int yyyy;
+        try{
+            System.out.println(" Introduza data de "+txt+"(no Formato dd/mm/yyyy): ");
+            data=br.readLine(); 
+           do{
+            str= new StringTokenizer(data,"/");
+            dd=Byte.parseByte(str.nextToken());
+            mm=Byte.parseByte(str.nextToken());
+            yyyy=Integer.parseInt(str.nextToken());
+           if((dd<1 || dd>31) || (mm<1 || mm>12)|| (yyyy<anoMin || yyyy>anoMax)){
+             System.out.print("Tente Novamente: ");
+             data=br.readLine();
+           }
+           }while((dd<1 || dd>31) || (mm<1 || mm>12)|| (yyyy<2000 || yyyy>2018));  
+        }catch(NumberFormatException | IOException | NoSuchElementException nfe){System.out.print(" Formato Invalido!");}
+    return data;
     }
     
 } 
