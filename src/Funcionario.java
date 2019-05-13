@@ -9,22 +9,22 @@ public class Funcionario {
     
     public Funcionario() throws IOException{
         Validar v=new Validar();
-        nome=v.validarNome("Nome",3,20);
-        apelido=v.validarNome("Apelido",3,20);
-        bi=v.validarBI("BI",13,13);
+        nome=v.validarNome("Nome\n Deve conter no minimo 3 letras e no maximo 20",3,20);
+        apelido=v.validarNome("Apelido\n Deve conter no minimo 3 letras e no maximo 20 e sem espaco",3,20);
+        bi=v.validarBI("BI\n Deve conter 12 numeros e uma letra",13,13);
         genero=v.validarGenero();
         System.out.println("Introduza o seu endereco: ");
         endereco=br.readLine();
-        System.out.println("Introduza o seu nacionalidade: ");
+        System.out.println("Introduza a sua nacionalidade: \n Sem numero");
         nacionalidade=br.readLine();
         estadoCivil=v.validarEstado();
-        categoria=v.validarNome("Categoria",5,20);
-        areaForm=v.validarNome("Area de formacao",5,20);
-        nivelForm=v.validarByte("Nivel de formacao",1,7);
+        categoria=v.validarCategoria();
+        areaForm=v.validarArea();
+        nivelForm=v.validarByte("Nivel de formacao \n De 1 a 7",1,7);
         telefone=v.validarLong("Telefone",820000000,879999999);
-        codFunc=v.validarInt("Codigo do funcionario", 11111, 99999);
-        nuit=v.validarInt("NUIT",100000000,999999999);
-        System.out.println("Introduza a data: ");
+        codFunc=v.validarInt("Codigo do funcionario \n Com 5 digitos", 11111, 99999);
+        nuit=v.validarInt("NUIT\n Com exatamenten9 digitos",100000000,999999999);
+        System.out.println("Introduza a data de nascimento: ");
         data=br.readLine();
         Calcular c=new Calcular();
         salario=c.getSalario();

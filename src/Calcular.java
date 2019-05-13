@@ -7,8 +7,8 @@ public class Calcular {
     
     public Calcular() throws IOException{
         Validar v=new Validar();
-        cargaHoraria=v.validarByte("Introduza a carga horaria diaria",1,10);
-        salarioPorHora=v.validarFloat("Introduza o seu salario(por hora)", 20, 500);
+        cargaHoraria=v.validarByte(" a carga horaria diaria\n de 1 a 10",1,10);
+        salarioPorHora=v.validarFloat(" seu salario(por hora) de 20 a 500", 20, 500);
         salario=(salarioPorHora*cargaHoraria*22);
     }
     
