@@ -30,13 +30,16 @@ public class Opr {
    public Opr(){ vs= new Vector();}
     public void menuOP() throws IOException, ClassNotFoundException{
            do{
+            
+            lerFich("funcionarios.txt");
+            System.out.println(toString());
             System.out.println(" ------------------------------ Menu de Operacões ------------------------------------");
             op=vr.validarInt("a opcao: \n 1 - Lista de Funcionarios funcionarios \n 2 - Remover Funcionarios da Empresa \n 3 - Actualizar Dados \n 0-Sair",0,3);
-            lerFich("funcionarios.txt");
+            
             switch(op){
                 case 1: 
                     ordenarNome();
-                    System.out.println(toString());
+                    escreverFicheiroTXT();
                     break;
                 case 2:
                     Remover();//ClassNotFoundException
@@ -156,7 +159,7 @@ public class Opr {
              vs.remove(posicao);
              vs.add(posicao,ad);
              ad=(Admin)vs.elementAt(posicao);
-             System.out.print(">>>>>>>>>>>>>>>>"+ad.getCargo());
+
              }else{
                  System.out.print("Nao pode realizar essa Opeacao");
              }
@@ -187,7 +190,7 @@ public class Opr {
         }while(op!=0);
       escreverFicheiroTXT();  
     }
-    public void ordenarNome(){
+ public void ordenarNome(){
         String nomedef1,nome[]=new String[2];
         int ind;
         ind=vs.size();
@@ -200,47 +203,46 @@ public class Opr {
                 f1=(Funcionario)vs.elementAt(j+1);
                 nome[1]=f1.getNome();
                 
-                nomedef1=f1.getNome();
+                nomedef1=f.getNome();
                 
                 Arrays.sort(nome);
                 if(nomedef1.equalsIgnoreCase(nome[0])){
                    vs.remove(j);vs.remove(j);
-                   vs.add(j,f1);
-                   vs.add(j+1,f);vs.trimToSize();
+                   vs.add(j,f);
+                   vs.add(j+1,f1);vs.trimToSize();
              }else{
                    vs.remove(j+1);vs.remove(j);
-                   vs.add(j+1,f1);vs.add(j,f);vs.trimToSize();}
+                   vs.add(j,f1);vs.add(j+1,f);vs.trimToSize();}
          }
            
      }
     
     }
     
+    
     public void Remover()throws IOException, ClassNotFoundException{
-    int cods=0,cod;
+    int indice=0,cod;
     byte x=0;
     do{
-    cod=vr.validarInt("Codigo(no formato xxxxx)", 11111, 99999);
-    for(int i=0; i<vs.size();i++){
-        f=(Funcionario)vs.elementAt(i);
-        cods= f.getCodFunc();
-        if(cods==cod){ vs.remove(i);}    
-     }
+      indice=encontrarIndice();
+      vs.remove(indice);
+      vs.trimToSize();
     x=vr.validarByte("Deseja Remover Outro Funcionario \n1-Sim \n0-Nao", (byte)0, (byte)1);
     vs.trimToSize();
     }while(x==1);
+    System.out.print(toString());
     }
     public byte encontrarIndice()throws IOException, ClassNotFoundException{
     int cods=0,cod;
-    byte x=-1,y=0;
+    byte x=-1,y=0,c=0;
     do{
         cod=vr.validarInt("Codigo(no formato xxxxx)", 11111, 99999);
         for(byte i=0; i<vs.size();i++){
             f=(Funcionario)vs.elementAt(i);
             cods= f.getCodFunc();
-            if(cods==cod){ x=i;y=0;}    
+            if(cods==cod){ x=i;y=0;c=0;}    
          }
-        if(x==-1){ y=vr.validarByte("Funcionario Nao Encontrado! \n1 - Tentar Novamente \n0 - Cancelar", (byte)0, (byte)1);}
+        if(c==-1){c=-1; y=vr.validarByte("Funcionario Nao Encontrado! \n1 - Tentar Novamente \n0 - Cancelar", (byte)0, (byte)1);}
     }while(y==1);
     return x;
     }
