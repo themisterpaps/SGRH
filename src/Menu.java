@@ -1,12 +1,13 @@
-
+package sgrh;
+import java.io.*;
 public class Menu {
-    private byte op;
+    byte op;
     public Menu(){
     }   
-    public void menuOP(){
+    public void menuOP() throws IOException {
          int op;
         
-        Validar v=new Validar();
+        Validacoes v=new Validacoes();
         Tarefas t=new Tarefas();;
         System.out.println("-----------------Menu-----------------");
         do{
@@ -14,19 +15,18 @@ public class Menu {
             op=v.validarInt("a opcao",1,3);
             switch(op){
                 case 1: 
-                    t.CriarFuncionario();
+                    t.cadastro();
                     t.escreverFicheiroTXT();
                     t.escreverFicheiroOdj("funcionario.dat");
                     break;
                 case 2:
                     Consulta c = new Consulta();
                     c.menuConsultas();
+                break;
+                default: 
                     System.out.println("Obrigado por usar nosso aplicativo!");
-                break;
-                default: System.out.println("Opcao invalida! Tente novamente.");
-                break;
+                    break;
             }
         }while(op!=3);   
     }
-   
 }

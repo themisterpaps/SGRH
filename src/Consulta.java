@@ -1,3 +1,4 @@
+package sgrh;
 import java.io.*;
 import java.util.StringTokenizer;
 public class Consulta {
@@ -7,35 +8,28 @@ public class Consulta {
     public void menuConsultas() {
     int op, q;
     try{
-        Validar v = new Validar();
+        Validacoes v = new Validacoes();
         System.out.println("-----------------Menu de Consultas-----------------");
         do{
-            System.out.println("1 - Consultar numero de funcionarios Masculinos \n2 - Consultar numero de Funcionarios Femeninos \n3 - Consultar numero de Funcionarios que preferem nao dizer genero \n4 - Consultar total numero de Funcionarios \n0 - sair");
+            System.out.println("1 - Consultar numero de funcionarios Masculinos \n2 - Consultar numero de Funcionarios Femininos \n3 - Consultar total numero de Funcionarios \n0 - sair");
             op=v.validarInt("a opcao",0,4);
             
             switch(op){
                 case 1: 
-                    q = consultaGen("Masculino");
                     System.out.println("===============================================================");
+                    q = consultaGen("M");
                     System.out.println("A empresa tem "+q+" Funcionario(s) Masculinos.");
                     System.out.println("===============================================================");
                 break;
                 
                 case 2: 
                     System.out.println("=====================================================================");
-                    q = consultaGen("Femenino");
-                    System.out.println("A empresa tem "+q+" Funcionario(s) Femeninos.");
+                    q = consultaGen("F");
+                    System.out.println("A empresa tem "+q+" Funcionario(s) Femininos.");
                     System.out.println("=====================================================================");
                 break;
                 
-                case 3: 
-                    System.out.println("=====================================================================");
-                    q = consultaGen("Personalizado");
-                    System.out.println("A empresa tem "+q+" Funcionario(s) que preferem nao dizer o seu genero.");
-                    System.out.println("=====================================================================");
-                break;
-                
-                case 4:
+                case 3:
                     System.out.println("=====================================================================");
                     q = consultaTotal();
                     System.out.println("A empresa tem um total de "+q+" Funcionario(s).");
@@ -57,14 +51,12 @@ public class Consulta {
         FileReader fr = new FileReader("funcionarios.txt");
         BufferedReader br = new BufferedReader(fr);
         linha=br.readLine();
-             while(linha!=null){
+            while(linha!=null){
             String[] tokens = linha.split("/");
-               if(tokens[4].equalsIgnoreCase(word)){
-                    for(int i=0; i<tokens.length-4; i++){
-                    System.out.print(tokens[i]+"\t");
-                }
-                     System.out.println(); 
-                     nr++;
+            if(tokens[4].equalsIgnoreCase(word)){
+                System.out.println("Nome: "+tokens[1]+"\tApelido: "+tokens[2]+"\tCodigo do Funcionario: "+tokens[0]);
+                System.out.println(); 
+                nr++;
             }
             linha=br.readLine();
         }    
@@ -84,9 +76,8 @@ public class Consulta {
         linha=br.readLine();
         while(linha!=null){
             String[] tokens = linha.split("/");
-             for(int i=0; i<tokens.length-4; i++){
-                    System.out.print(tokens[i]+"\t");
-                }
+            System.out.println("Nome: "+tokens[1]+"\tApelido: "+tokens[2]+"\tCodigo do Funcionario: "+tokens[0]);
+            System.out.println(); 
             nr++;
             linha=br.readLine();
         }
