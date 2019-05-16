@@ -10,8 +10,8 @@ public class Validacoes {
     Date dt=cf.getTime();
     SimpleDateFormat sdf=new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
     datas=sdf.format(dt);
-    return datas;
-    }
+    return datas; }
+    
     public String adapatarOpcoes(String msg, String op1, String op2) {
         int op=0;
         String s = "";
@@ -29,6 +29,92 @@ public class Validacoes {
         if(op==2){s=op2;}
         return s;
     }
+    public String adaptarArea(){
+     String a="";
+     int op;
+      try{
+     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+     op=validarInt("Digite a sua Area de Formacao\n 1-Administracao\n 2-Dierito\n 3-Economia\n 4-Educacao\n 5-Engenharia \n 6-Gestao\n 7-Psicologia\n 8-Publicidade\n 9-Saude\n 10-Sociologia\n 11-Transportes \n 12-Outros",1,12);
+     switch(op){
+         case 1:
+             a="Administracao";
+        break;
+         case 2:
+             a="Direito";
+        break;
+         case 3:
+             a="Economia";
+             
+        break;
+         case 4:
+            a="Educacao";
+        break;
+         case 5:
+            a="Engenharia";
+        break;
+         case 6:
+            a="Gestao";
+        break;
+         case 7:
+            a="Psicologia";
+        break;
+         case 8:
+            a="Física";
+        break;
+         case 9:
+            a="Saude";
+        break;
+         case 10:
+            a="Matematica";
+        break;
+         case 11:
+             a="Estatística";
+         case 12:
+                //v=new Validacoes();
+                a=validarSemNr("sua area de Formação", (byte)5, (byte)20);
+            break;
+         default :
+             a="Nenhuma";}
+                    
+        }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}            
+     return a; 
+  
+  }
+    public String adaptarCargo(){
+        String a="";
+        int op;
+        try{
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        op=validarInt("Digite o seu cargo\n 1-Director\n 2-Gestor\n 3-Advogado\n 4-Chefe \n 5-Tecnico\n 6-Estagiario\n 7-Outro",1,7);
+        switch(op){
+            case 1:
+              a="Director(a)";
+            break;
+            case 2:
+              a="Gestor(a)";
+            break;
+            case 3:
+              a="Advogado(a)";
+            break;
+            case 4:
+              a="Chefe";
+            break;
+            case 5:
+              a="Gerente(a)";
+            break;
+            case 6:
+              a="Supervisor";
+            break;
+            case 7:
+               a=validarSemNr("seu cargo", (byte)5, (byte)20);
+            break;
+            default:
+              a="Funcionario";
+            break;    } 
+         }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}
+        return a;    
+    }
+    
     public String validarNome(String f,int y, int z)  {
         char c;
         short b;
@@ -122,7 +208,7 @@ public class Validacoes {
         int op=0;
         String s;
         try{
-        System.out.println("Estado Civil: \n1-Soleteiro(a) \n2Casado(a) \n3-Viuvo(a)");
+        System.out.println("Estado Civil: \n 1 - Soleteiro(a) \n 2 - Casado(a) \n 3 - Viuvo(a)");
         op=Integer.parseInt(br.readLine());
         while(op<1 || op>3){
             System.out.println("Opcao invalida! Por favor, tente novamente");
@@ -143,10 +229,10 @@ public class Validacoes {
     int yyyy =0;
     do{
         try{
-            System.out.println(" Introduza data de "+txt+"(no Formato dd/mm/yyyy): ");
+            System.out.println(" Introduza data de "+txt+"(no Formato dd-mm-yyyy): ");
             data=br.readLine(); 
            do{
-            str= new StringTokenizer(data,"/");
+            str= new StringTokenizer(data,"-");
             dd=Byte.parseByte(str.nextToken());
             mm=Byte.parseByte(str.nextToken());
             yyyy=Integer.parseInt(str.nextToken());
@@ -190,4 +276,13 @@ public class Validacoes {
         catch(IOException io){System.out.print(io.getMessage());}
        return c;
    }
+    public String NotValid(String k) {
+    String x="";
+       try{
+     System.out.println("Introduza "+k);
+     x=br.readLine();
+      }catch(IOException io){System.out.print(io.getMessage());}
+     return x;
+     
+    }
 }

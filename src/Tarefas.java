@@ -2,78 +2,13 @@ package sgrh;
 import java.io.*;
 import java.util.*;
 public class Tarefas {
-    private Funcionario fun;
-    static Vector vt = new Vector();
-    private int nr,cont;
+    //Objectos
+    private Vector vt = new Vector(); Funcionario fun;
     private Validacoes v;
-    String nome, apelido, bi, genero, endereco, nacionalidade, estadoCivil, dataNasc,dataRegistro, areaForm, areaLeciona,instituicao,cargo;
-    long telefone;
-    int codFunc, nuit,nivelEscolar,anoDeFormacao;
-    byte anosExperiencia;
-    float salario=0;
-    char criterio;
     Salario s = new Salario();
-    private BufferedReader br= new BufferedReader( new InputStreamReader(System.in));
+    //Contructor
     public Tarefas(){}
-    public void lerFich (String nomeFich){
-        StringTokenizer str;
-        String linha = "";
-        try{
-            BufferedReader br = new BufferedReader (new FileReader(nomeFich));
-            linha = br.readLine();
-            while(linha != null){
-                str= new StringTokenizer (linha, "/");
-                nome=str.nextToken();
-                apelido=str.nextToken();
-                bi=str.nextToken();
-                genero=str.nextToken();
-                endereco=str.nextToken();
-                nacionalidade=str.nextToken();
-                estadoCivil=str.nextToken();
-                dataNasc=str.nextToken();
-                telefone=Long.parseLong(str.nextToken());
-                codFunc=Integer.parseInt(str.nextToken());
-                nuit=Integer.parseInt(str.nextToken());
-                dataRegistro=str.nextToken();
-                
-                criterio = str.nextToken().charAt(0);
-                if (criterio=='A' || criterio== 'a'){
-                    cargo =str.nextToken();
-                    criaAdmin (nome, apelido, bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone,  nuit,dataRegistro,salario, cargo);
-                }
-                else{
-                    if(criterio == 'E' || criterio == 'e'){
-                        areaForm = str.nextToken();
-                        areaLeciona = str.nextToken();
-                        criterio = str.nextToken().charAt(0);
-                        if(criterio == 'L' || criterio == 'l'){
-                            anosExperiencia = Byte.parseByte(str.nextToken());
-                            anoDeFormacao = Integer.parseInt(str.nextToken());
-                            criaLicenciado(nome, apelido, bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone, nuit, dataRegistro, salario,areaForm, areaLeciona, anosExperiencia, anoDeFormacao);
-                        }
-                        else{
-                            if(criterio == 'E' || criterio =='e'){
-                                nivelEscolar = Integer.parseInt(str.nextToken());
-                                instituicao = str.nextToken();
-                                criaEstudante(nome, apelido,bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone,nuit, dataRegistro, salario,areaForm, areaLeciona, nivelEscolar, instituicao);
-                            }
-                        }
-                    }
-                }
-                linha = br.readLine();
-            }
-            br.close();
-        }
-        catch(FileNotFoundException fn){
-            System.out.println("Ficheiro não econtrado");
-        }
-        catch(NumberFormatException nn){
-            System.out.println(nn.getMessage());
-        }
-        catch(IOException io){
-            System.out.println(io.getMessage());
-        }
-    }
+    //Metodos Adaptadores dos Settes
     public void criaAdmin (String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro, float salario,String cargo) {
         Admin a= new Admin ();
         a.setNome(nome);
@@ -112,6 +47,7 @@ public class Tarefas {
         l.setAnosExperiencia(anosExperiencia);
         l.setAnoDeFormacao(anoDeFormacao);
         vt.addElement(l);
+        System.out.println(l.toString());
     }
     public void criaEstudante(String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro,float salario,String areaForm,String areaLeciona,int nivelEscolar, String instituicao) {
         Estudante e = new Estudante();
@@ -133,7 +69,9 @@ public class Tarefas {
         e.setNivel(nivelEscolar);
         e.setInstituicao(instituicao);
         vt.addElement(e);
+        System.out.println(e.toString());
     }
+    //toString
     public String toString(){
         String ver="";
         Funcionario f;
@@ -144,32 +82,38 @@ public class Tarefas {
         return ver;
     }
     public void cadastro() throws IOException{
+    String nome, apelido, bi, genero, endereco, nacionalidade, estadoCivil, dataNasc,dataRegistro, areaForm, areaLeciona,instituicao,cargo;
+    long telefone;
+    int codFunc, nuit,nivelEscolar,anoDeFormacao;
+    byte anosExperiencia;
+    float salario=0;
+    char criterio;
+        
         v=new Validacoes();
         nome=v.validarNome("Nome(no minimo 3 letras e no maximo 20)",3,20);
         apelido=v.validarNome("Apelido (Deve conter no minimo 3 letras e no maximo 20 e sem espaco)",3,20);
         bi=v.validarBI("BI Deve conter 12 numeros e uma letra",(byte)13);
         codFunc=v.validarInt("Codigo do funcionario: (Com 5 digitos)", 10000, 99999);
         genero=v.adapatarOpcoes(" Sexo: 1-Femenio 2-Masculino ", "F" , "M");
-        System.out.println("Introduz o seu actual endereço: ");
-        endereco = br.readLine();
+        endereco = v.NotValid("Introduz o seu actual endereço: ");
         nacionalidade=v.validarSemNr("Nacionalidade", (byte) 5, (byte)20);
         estadoCivil=v.validarEstCivil();
-        dataNasc =  v.validarData(" de Nascimento ", 1950, 2001);
+        dataNasc =  v.validarData(" de Nascimento \n NB:Deve ter idade igual o superior a 18 anos. ", 1950, 2001);
         telefone = v.validarLong(" Número de telefone ", 820000000, 870000000);
         nuit = v.validarInt(" NUIT ",100000000 , 999999999);
         dataRegistro = v.dataActual();
         s.menuSal();
-        this.salario = s.getSalario();
-        criterio = v.adapatarOpcoes(" Fuçao: 1-Administração 2-Explicação ", "A", "E").charAt(0);
+        salario = s.getSalario();
+        criterio = v.adapatarOpcoes(" Funçao: 1-Administração 2-Explicação ", "A", "E").charAt(0);
         if(criterio == 'A' || criterio == 'a'){
-            cargo = v.validarSemNr(" Cargo", 5, 30);
+            cargo = v.adaptarCargo();
             criaAdmin (nome, apelido, bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone,  nuit,dataRegistro,salario, cargo);
         }
         else{
             if(criterio == 'E' || criterio == 'e' ){
-                areaForm = v.validarSemNr(" Curso ", 3, 15);
+                areaForm = v.adaptarArea();
                 areaLeciona = v.validarSemNr(" Area que Lecciona ",5, 15);
-                criterio = v.adapatarOpcoes(" Nível de Formação: 1-Estudante 2-Licenciado ", "E", "L").charAt(0);
+                criterio = v.adapatarOpcoes(" Nível de Formação: \n 1-Estudante \n 2-Licenciado ", "E", "L").charAt(0);
                 if(criterio=='L' || criterio == 'l'){
                     anosExperiencia = v.validarByte(" Anos de experiência ", 0, 20);
                     anoDeFormacao = v.validarInt("Ano de Formação ", 1990, 2019);
@@ -184,7 +128,9 @@ public class Tarefas {
                 }
             }
         }
+        System.out.println("======================= Cadastrado com Sucesso ===============================");
     }
+    //Escrita No Ficheiro
     public void escreverFicheiroTXT(){
         try{
             FileWriter fw=new FileWriter("funcionarios.txt",true);
@@ -205,4 +151,5 @@ public class Tarefas {
             oos.close();
         }catch(IOException ios){System.out.print(ios.getMessage());}
     }
+    
 }

@@ -55,6 +55,6 @@ public class Funcionario implements Serializable{
     public void setSalario(float salario) {  this.salario = salario; }
     
     //ToString
-    public String dadosFich(){return codFunc+"/"+nome+"/"+apelido+"/"+bi+"/"+genero+"/"+endereco+"/"+nacionalidade+"/"+estadoCivil+"/"+telefone+"/"+nuit+"/"+dataRegistro+"/"+salario;}
+    public String dadosFich(){return codFunc+"/"+nome+"/"+apelido+"/"+bi+"/"+genero+"/"+endereco+"/"+nacionalidade+"/"+estadoCivil+"/"+dataNasc+"/"+telefone+"/"+nuit+"/"+dataRegistro+"/"+salario;}
     public String toString(){return "Codigo do Funcionario: "+codFunc+"\tnome: "+nome+"\nApelido: "+apelido+"\tBI: "+bi+"\tGenero: "+genero+"\tEndereco: "+endereco+"\tNacionalidade: "+nacionalidade+"\tEstado Civil: "+estadoCivil+"\tTelefone: "+telefone+"\tData de Nascimento: "+dataNasc+"\tNuit: "+nuit+"\tData de Registro: "+dataRegistro + "\tSalário: "+ salario;}
 }
