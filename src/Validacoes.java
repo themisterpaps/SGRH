@@ -19,7 +19,7 @@ public class Validacoes {
         System.out.println("Escolha"+ msg);
         op=Integer.parseInt(br.readLine());
         while(op<1 || op>2){
-            System.out.println("Opcao invalida! Por favor, tente novamente");
+            System.err.println("Opcao invalida! Por favor, tente novamente");
             op=Integer.parseInt(br.readLine());
         }
         }catch(NumberFormatException nfe){nfe.getMessage();}
@@ -76,7 +76,7 @@ public class Validacoes {
          default :
              a="Nenhuma";}
                     
-        }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}            
+        }catch(NumberFormatException nfe){System.err.print(nfe.getMessage());}            
      return a; 
   
   }
@@ -111,7 +111,7 @@ public class Validacoes {
             default:
               a="Funcionario";
             break;    } 
-         }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}
+         }catch(NumberFormatException nfe){System.err.print(nfe.getMessage());}
         return a;    
     }
     
@@ -136,8 +136,8 @@ public class Validacoes {
                 System.out.print("Tente Novamente: ");
                 txt=br.readLine();}
          }while((l!=txt.length()) || (b<y || b>z));
-        }catch(IndexOutOfBoundsException ie){System.out.print(ie.getMessage());}
-        catch(IOException io){System.out.print(io.getMessage());}
+        }catch(IndexOutOfBoundsException ie){System.err.print(ie.getMessage());}
+        catch(IOException io){System.err.print(io.getMessage());}
        return txt;
   }
     public String validarBI(String f, byte z){
@@ -158,11 +158,11 @@ public class Validacoes {
            }
            if(Character.isLetter(txt.charAt(b-1))){nr++;}
            if((nrS!=b-2) ||(b!=z)||(nr!=1)){ 
-                System.out.println("Tente Novamente: ");
+                System.err.println("Tente Novamente: ");
                 txt=br.readLine();}
          }while((nrS!=txt.length()-2) || (b!=z)||(nr!=1));
-       }catch(IndexOutOfBoundsException ie){System.out.print(ie.getMessage());}
-        catch(IOException io){System.out.print(io.getMessage());}
+       }catch(IndexOutOfBoundsException ie){System.err.print(ie.getMessage());}
+        catch(IOException io){System.err.print(io.getMessage());}
        return txt;
     }
     public int validarInt(String k, int x, int y) {
@@ -172,12 +172,12 @@ public class Validacoes {
         c=Integer.parseInt(br.readLine()); 
        do{
            if(c<x || c>y)
-{             System.out.print("Tente Novamente: ");
+{             System.err.print("Tente Novamente: ");
              c=Integer.parseInt(br.readLine());
            }
            }while(c<x || c>y);  
-       }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}
-        catch(IOException io){System.out.print(io.getMessage());}
+       }catch(NumberFormatException nfe){System.err.print(nfe.getMessage());}
+        catch(IOException io){System.err.print(io.getMessage());}
        return c;
    }
     public String validarSemNr(String f,int y, int z) {
@@ -197,11 +197,11 @@ public class Validacoes {
                     l++;}
            }
            if((l!=txt.length()) || (b<y || b>z)){ 
-                System.out.print("Tente Novamente: ");
+                System.err.print("Tente Novamente: ");
                 txt=br.readLine();}
          }while((l!=txt.length()) || (b<y || b>z));
-        }catch(IndexOutOfBoundsException ie){System.out.print(ie.getMessage());}
-        catch(IOException io){System.out.print(io.getMessage());}
+        }catch(IndexOutOfBoundsException ie){System.err.print(ie.getMessage());}
+        catch(IOException io){System.err.print(io.getMessage());}
        return txt;
     }
     public String validarEstCivil() {
@@ -211,7 +211,7 @@ public class Validacoes {
         System.out.println("Estado Civil: \n 1 - Soleteiro(a) \n 2 - Casado(a) \n 3 - Viuvo(a)");
         op=Integer.parseInt(br.readLine());
         while(op<1 || op>3){
-            System.out.println("Opcao invalida! Por favor, tente novamente");
+            System.err.println("Opcao invalida! Por favor, tente novamente");
             op=Integer.parseInt(br.readLine());
         }
         }catch(NumberFormatException nfe){nfe.getMessage();}
@@ -237,11 +237,11 @@ public class Validacoes {
             mm=Byte.parseByte(str.nextToken());
             yyyy=Integer.parseInt(str.nextToken());
            if((dd<1 || dd>31) || (mm<1 || mm>12)|| (yyyy<anoMin || yyyy>anoMax)){
-             System.out.print("Tente Novamente: ");
+             System.err.print("Tente Novamente: ");
              data=br.readLine();
            }
            }while((dd<1 || dd>31) || (mm<1 || mm>12)|| (yyyy<anoMin || yyyy>anoMax));  
-        }catch(NumberFormatException | IOException | NoSuchElementException nfe){System.out.print(" Formato Invalido!");}
+        }catch(NumberFormatException | IOException | NoSuchElementException nfe){System.err.print(" Formato Invalido!");}
     }
     while((dd<1 || dd>31) || (mm<1 || mm>12)|| (yyyy<anoMin || yyyy>anoMax));
     return data;
@@ -253,12 +253,12 @@ public class Validacoes {
         c=Byte.parseByte(br.readLine()); 
        do{
            if(c<x || c>y){
-             System.out.print("Tente Novamente: ");
+             System.err.print("Tente Novamente: ");
              c=Byte.parseByte(br.readLine());
            }
            }while(c<x || c>y);
-       }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}
-        catch(IOException io){System.out.print(io.getMessage());}
+       }catch(NumberFormatException nfe){System.err.print(nfe.getMessage());}
+        catch(IOException io){System.err.print(io.getMessage());}
        return c;
    }
     public Long validarLong(String f, long g, long h) {
@@ -268,12 +268,12 @@ public class Validacoes {
         c=Long.parseLong(br.readLine()); 
        do{
            if(c<g || c>h){
-             System.out.print("Tente Novamente: ");
+             System.err.print("Tente Novamente: ");
              c=Long.parseLong(br.readLine());
            }
            }while(c<g || c>h);  
-       }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}
-        catch(IOException io){System.out.print(io.getMessage());}
+       }catch(NumberFormatException nfe){System.err.print(nfe.getMessage());}
+        catch(IOException io){System.err.print(io.getMessage());}
        return c;
    }
     public String NotValid(String k) {
@@ -281,7 +281,7 @@ public class Validacoes {
        try{
      System.out.println("Introduza "+k);
      x=br.readLine();
-      }catch(IOException io){System.out.print(io.getMessage());}
+      }catch(IOException io){System.err.print(io.getMessage());}
      return x;
      
     }

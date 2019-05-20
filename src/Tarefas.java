@@ -128,7 +128,9 @@ public class Tarefas {
                 }
             }
         }
+        System.out.println("==============================================================================");
         System.out.println("======================= Cadastrado com Sucesso ===============================");
+        System.out.println("==============================================================================");
     }
     //Escrita No Ficheiro
     public void escreverFicheiroTXT(){
