@@ -143,8 +143,9 @@ public class Opr {
    //>>>>>>>>>>>>>>Actualizacao de Dados
       public void menuActualizacao() {
         byte op=0,posicao;
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>> Lista de Todos Funcionarios <<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+         System.out.println("====================== Lista de Todos Funcionarios ============================");
         System.out.println(toString());
+        System.out.println("===============================================================================");
         posicao=encontrarIndice();
         f=(Funcionario)vs.elementAt(posicao);
         Explicador ex;
@@ -248,7 +249,7 @@ public class Opr {
         Funcionario f;
         for(int i = 0; i < vs.size(); i++){
             f = (Funcionario)vs.elementAt(i);
-            ver+= (f.toString() + "\n");
+            ver+= (f.toString() + "\n ===============================================================================\n");
         }
         return ver;
     }

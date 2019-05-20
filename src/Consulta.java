@@ -43,8 +43,7 @@ public class Consulta {
     public int consultaTotal(String linha){
         int nr;
             String[] tokens = linha.split("/");
-            System.out.println("Nome: "+tokens[1]+"\tApelido: "+tokens[2]+"\tCodigo do Funcionario: "+tokens[0]);
-            System.out.println(); 
+            System.out.println(" | "+tokens[0]+"  ||  "+tokens[3]+"  ||  "+tokens[8]+"  ||  "+tokens[1]+" "+tokens[2]);
             nr=1;
         return nr;
         
@@ -53,8 +52,8 @@ public class Consulta {
             int nr=0;
             String[] tokens = linha.split("/");
             if(tokens[4].equalsIgnoreCase(word)){
-                System.out.println("Nome: "+tokens[1]+"\tApelido: "+tokens[2]+"\tCodigo do Funcionario: "+tokens[0]);
-                nr=1;
+              System.out.println(" | "+tokens[0]+"  ||  "+tokens[3]+"  ||  "+tokens[8]+"  ||  "+tokens[1]+" "+tokens[2]);
+              nr=1;
             }
     return nr;}  
          

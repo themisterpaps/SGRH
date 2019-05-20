@@ -16,6 +16,6 @@ private byte anosExperiencia;
     public int getAnoDeFormacao() {return anoDeFormacao;}
     public void setAnosExperiencia(byte anosExperiencia) {this.anosExperiencia = anosExperiencia;}
     public void setAnoDeFormacao(int anoDeFormacao) {this.anoDeFormacao = anoDeFormacao;} 
-    public String toString() {return super.toString()+"\tAnos de Experiencia: "+anosExperiencia+"\tAnos de Formacao: "+anoDeFormacao; }
+    public String toString() {return super.toString()+"\n Anos de Experiencia: "+anosExperiencia+"\n Anos de Formacao: "+anoDeFormacao; }
     public String dadosFich(){return super.dadosFich()+"/L/"+anosExperiencia+"/"+anoDeFormacao;}
 }

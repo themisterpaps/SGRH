@@ -11,6 +11,6 @@ public class Admin extends Funcionario {
     public void setCargo(String cargo) {this.cargo = cargo;}
     
 
-    public String toString() {return super.toString()+"\tCargo: "+cargo; }
+    public String toString() {return super.toString()+"\n Cargo: "+cargo; }
     public String dadosFich(){return super.dadosFich()+"/A"+"/"+cargo;}
 }

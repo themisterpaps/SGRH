@@ -84,14 +84,18 @@ public class Menu {
             switch(op){
                 case 1: 
                     System.out.println("==============================================================================");
+                    System.out.println(" | Codigo ||      BI         ||   Contacto  || Nome Completo");
+                    System.out.println(" |--------||-----------------||------------ || ----------------");
                     cs.Principal(1);
                     System.out.println("==============================================================================");
                 break;
                 
                 case 2: 
                     System.out.println("==============================================================================");
+                    System.out.println(" | Codigo ||      BI         ||   Contacto  || Nome Completo");
+                    System.out.println(" |--------||-----------------||------------ || ----------------");
                     cs.Principal(2);
-                     System.out.println("==============================================================================");
+                    System.out.println("==============================================================================");
                 break;
                 
                 case 3:
@@ -105,7 +109,8 @@ public class Menu {
                     System.out.println("==============================================================================");
                 break;
                 
-                default: System.out.println("======================== Fim das Consultas ===================================");
+                default: 
+                    System.out.println("============================= Fim das Consultas ==============================");
                 
                 break;
             }

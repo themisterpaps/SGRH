@@ -16,6 +16,6 @@ public class Estudante extends Explicador {
     public void setNivel(int nivelEscolar) {this.nivelEscolar = nivelEscolar; }
     public void setInstituicao(String instituicao) {this.instituicao = instituicao;}
     
-    public String toString() {return super.toString()+"\tNivel Escolar: "+nivelEscolar+ "\tInstituicao: " + instituicao ; }
+    public String toString() {return super.toString()+"\n Nivel Escolar: "+nivelEscolar+ "\n Instituicao: " + instituicao ; }
     public String dadosFich(){return super.dadosFich()+"/E"+"/"+nivelEscolar+"/"+instituicao;}
 }
