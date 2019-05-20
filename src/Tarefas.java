@@ -2,13 +2,69 @@ package sgrh;
 import java.io.*;
 import java.util.*;
 public class Tarefas {
-    //Objectos
+    //Objectosfalse
     private Vector vt = new Vector(); Funcionario fun;
     private Validacoes v;
-    Salario s = new Salario();
+    private Adpt_Ficheiro ficheiro;
+    private Salario s;
+    
     //Contructor
-    public Tarefas(){}
-    //Metodos Adaptadores dos Settes
+    public Tarefas(){
+        ficheiro = new  Adpt_Ficheiro();
+        s = new Salario();
+    }
+    public void cadastro() {
+    String nome, apelido, bi, genero, endereco, nacionalidade, estadoCivil, dataNasc,dataRegistro, areaForm, areaLeciona,instituicao,cargo;
+    long telefone;
+    int codFunc, nuit,nivelEscolar,anoDeFormacao;
+    byte anosExperiencia;
+    float salario=0;
+    char criterio;
+        
+        v=new Validacoes();
+        nome=v.validarNome("Nome(no minimo 3 letras e no maximo 20)",3,20);
+        apelido=v.validarNome("Apelido (Deve conter no minimo 3 letras e no maximo 20 e sem espaco)",3,20);
+        bi=v.validarBI("BI Deve conter 12 numeros e uma letra",(byte)13);
+        codFunc=v.validarInt("Codigo do funcionario: (Com 5 digitos)", 10000, 99999);
+        genero=v.adapatarOpcoes(" Sexo: \n 1-Femenio \n 2-Masculino ", "F" , "M");
+        endereco = v.NotValid("Introduz o seu actual endereço: ");
+        nacionalidade=v.validarSemNr("Nacionalidade", (byte) 5, (byte)20);
+        estadoCivil=v.validarEstCivil();
+        dataNasc =  v.validarData(" de Nascimento \n NB:Deve ter idade igual o superior a 18 anos. ", 1950, 2001);
+        telefone = v.validarLong(" Número de telefone ", 820000000, 870000000);
+        nuit = v.validarInt(" NUIT ",100000000 , 999999999);
+        dataRegistro = v.dataActual();
+        s.menuSal();
+        salario = s.getSalario();
+        criterio = v.adapatarOpcoes(" Funçao: \n 1-Administração \n 2-Explicação ", "A", "E").charAt(0);
+        if(criterio == 'A' || criterio == 'a'){
+            cargo = v.adaptarCargo();
+            criaAdmin (nome, apelido, bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone,  nuit,dataRegistro,salario, cargo);
+        }
+        else{
+            if(criterio == 'E' || criterio == 'e' ){
+                areaForm = v.adaptarArea();
+                areaLeciona = v.validarSemNr(" Area que Lecciona ",5, 15);
+                criterio = v.adapatarOpcoes(" Nível de Formação: \n 1-Estudante \n 2-Licenciado ", "E", "L").charAt(0);
+                if(criterio=='L' || criterio == 'l'){
+                    anosExperiencia = v.validarByte(" Anos de experiência ", 0, 20);
+                    anoDeFormacao = v.validarInt("Ano de Formação ", 1990, 2019);
+                    criaLicenciado(nome, apelido, bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone, nuit, dataRegistro, salario,areaForm, areaLeciona, anosExperiencia, anoDeFormacao);
+                }
+                else{
+                    if(criterio == 'E' || criterio == 'e'){
+                        nivelEscolar = v.validarInt("Nível escolar", 1, 5);
+                        instituicao = v.validarSemNr("Instituição que frequenta", 2, 20);
+                        criaEstudante(nome, apelido,bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone,nuit, dataRegistro,salario, areaForm, areaLeciona, nivelEscolar, instituicao);
+                    }
+                }
+            }
+        }
+        System.out.println("==============================================================================");
+        System.out.println("======================= Cadastrado com Sucesso ===============================");
+        System.out.println("==============================================================================");
+    }
+    // Criacao de Objectos
     public void criaAdmin (String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro, float salario,String cargo) {
         Admin a= new Admin ();
         a.setNome(nome);
@@ -71,7 +127,13 @@ public class Tarefas {
         vt.addElement(e);
         System.out.println(e.toString());
     }
-    //toString
+    //Escrita No Ficheiro
+    public void escreverFicheiroTXT(String nomeFich){ficheiro.esc_VectorEmTXT(nomeFich, vt, false); };
+    public void escreverFicheiroDAT(String nomeFich){
+        ficheiro.esc_VectorEmDAT(nomeFich, vt);
+    };
+   
+     //toString
     public String toString(){
         String ver="";
         Funcionario f;
@@ -80,78 +142,6 @@ public class Tarefas {
             ver+= ver.concat(f.toString() + "\n");
         }
         return ver;
-    }
-    public void cadastro() throws IOException{
-    String nome, apelido, bi, genero, endereco, nacionalidade, estadoCivil, dataNasc,dataRegistro, areaForm, areaLeciona,instituicao,cargo;
-    long telefone;
-    int codFunc, nuit,nivelEscolar,anoDeFormacao;
-    byte anosExperiencia;
-    float salario=0;
-    char criterio;
-        
-        v=new Validacoes();
-        nome=v.validarNome("Nome(no minimo 3 letras e no maximo 20)",3,20);
-        apelido=v.validarNome("Apelido (Deve conter no minimo 3 letras e no maximo 20 e sem espaco)",3,20);
-        bi=v.validarBI("BI Deve conter 12 numeros e uma letra",(byte)13);
-        codFunc=v.validarInt("Codigo do funcionario: (Com 5 digitos)", 10000, 99999);
-        genero=v.adapatarOpcoes(" Sexo: 1-Femenio 2-Masculino ", "F" , "M");
-        endereco = v.NotValid("Introduz o seu actual endereço: ");
-        nacionalidade=v.validarSemNr("Nacionalidade", (byte) 5, (byte)20);
-        estadoCivil=v.validarEstCivil();
-        dataNasc =  v.validarData(" de Nascimento \n NB:Deve ter idade igual o superior a 18 anos. ", 1950, 2001);
-        telefone = v.validarLong(" Número de telefone ", 820000000, 870000000);
-        nuit = v.validarInt(" NUIT ",100000000 , 999999999);
-        dataRegistro = v.dataActual();
-        s.menuSal();
-        salario = s.getSalario();
-        criterio = v.adapatarOpcoes(" Funçao: 1-Administração 2-Explicação ", "A", "E").charAt(0);
-        if(criterio == 'A' || criterio == 'a'){
-            cargo = v.adaptarCargo();
-            criaAdmin (nome, apelido, bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone,  nuit,dataRegistro,salario, cargo);
-        }
-        else{
-            if(criterio == 'E' || criterio == 'e' ){
-                areaForm = v.adaptarArea();
-                areaLeciona = v.validarSemNr(" Area que Lecciona ",5, 15);
-                criterio = v.adapatarOpcoes(" Nível de Formação: \n 1-Estudante \n 2-Licenciado ", "E", "L").charAt(0);
-                if(criterio=='L' || criterio == 'l'){
-                    anosExperiencia = v.validarByte(" Anos de experiência ", 0, 20);
-                    anoDeFormacao = v.validarInt("Ano de Formação ", 1990, 2019);
-                    criaLicenciado(nome, apelido, bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone, nuit, dataRegistro, salario,areaForm, areaLeciona, anosExperiencia, anoDeFormacao);
-                }
-                else{
-                    if(criterio == 'E' || criterio == 'e'){
-                        nivelEscolar = v.validarInt("Nível escolar", 1, 5);
-                        instituicao = v.validarSemNr("Instituição que frequenta", 2, 20);
-                        criaEstudante(nome, apelido,bi, codFunc, genero, endereco, nacionalidade, estadoCivil, dataNasc,telefone,nuit, dataRegistro,salario, areaForm, areaLeciona, nivelEscolar, instituicao);
-                    }
-                }
-            }
-        }
-        System.out.println("==============================================================================");
-        System.out.println("======================= Cadastrado com Sucesso ===============================");
-        System.out.println("==============================================================================");
-    }
-    //Escrita No Ficheiro
-    public void escreverFicheiroTXT(){
-        try{
-            FileWriter fw=new FileWriter("funcionarios.txt",true);
-            BufferedWriter bw=new BufferedWriter(fw);
-            for(int i=0; i<vt.size(); i++){
-                fun=(Funcionario)(vt.elementAt(i));
-                bw.write(fun.dadosFich());
-                bw.newLine();
-            }
-            bw.close();
-        }catch(IOException io){System.out.print(io.getMessage());}        
-    }
-    public void escreverFicheiroOdj(String fichOd){
-        try{
-            FileOutputStream fos= new FileOutputStream(fichOd);
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
-            oos.writeObject(vt);
-            oos.close();
-        }catch(IOException ios){System.out.print(ios.getMessage());}
     }
     
 }

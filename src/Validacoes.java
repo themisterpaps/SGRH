@@ -133,7 +133,7 @@ public class Validacoes {
                     l++;}
            }
            if((l!=txt.length()) || (b<y || b>z)){ 
-                System.out.print("Tente Novamente: ");
+                System.err.print("Tente Novamente: ");
                 txt=br.readLine();}
          }while((l!=txt.length()) || (b<y || b>z));
         }catch(IndexOutOfBoundsException ie){System.err.print(ie.getMessage());}

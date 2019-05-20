@@ -1,63 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sgrh;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-
-
-
+import java.io.*;
+import java.util.*;
 public class Opr {
-   Vector vs; Funcionario f,f1;
-   Tarefas tr=new Tarefas();
-   int op;
-   Validacoes vr=new Validacoes();
-   public Opr(){ vs= new Vector();}
-    public void menuOP() throws IOException, ClassNotFoundException{
-           do{
-            
-            lerFich("funcionarios.txt");
-            System.out.println(toString());
-            System.out.println(" ------------------------------ Menu de Operacões ------------------------------------");
-            op=vr.validarInt("a opcao: \n 1 - Lista de Funcionarios funcionarios \n 2 - Remover Funcionarios da Empresa \n 3 - Actualizar Dados \n 0-Sair",0,3);
-            
-            switch(op){
-                case 1: 
-                    ordenarNome();
-                    escreverFicheiroTXT();
-                    break;
-                case 2:
-                    Remover();//ClassNotFoundException
-                    escreverFicheiroTXT();
-                    System.out.print(toString());
-                    
-                break;
-                case 3://alterDados();
-                     menuActualizacao();
-                break;
-                default: 
-                    System.out.println("Obrigado por usar nosso aplicativo!");
-                break;
-                   
-            }
-        }while(op!=0);
-    }
-    public void lerFich (String nomeFich){
+   private Vector vs; Funcionario f,f1;
+   private Tarefas tr=new Tarefas();
+   private int op;
+   private Validacoes vr;
+   private Adpt_Ficheiro ficheiro;
+   
+   public Opr(){ vs= new Vector();vr=new Validacoes();ficheiro = new  Adpt_Ficheiro();}
+   public void lerFich (String nomeFich){
         //Variaveis
             String nome, apelido, bi, genero, endereco, nacionalidade, estadoCivil, dataNasc,dataRegistro, areaForm, areaLeciona,instituicao,cargo;
             long telefone;
@@ -124,129 +77,8 @@ public class Opr {
             System.out.println(io.getMessage());
         }
     }
-    public void menuActualizacao() throws IOException, ClassNotFoundException{
-        byte op=0,posicao;
-        //>>>>>>>>>>>>>>> Menu
-        System.out.println("--------------------------------------------------------------- Lista de Todos Funcionarios  --------------------------------------------");
-        System.out.println(toString());
-        posicao=encontrarIndice();
-       //>>>>>>>>>>>>>> Cases
-        f=(Funcionario)vs.elementAt(posicao);
-        Explicador ex; Admin ad;Estudante es;
-        do{ 
-           System.out.println("----------------------------- Menu de Actualizacão  ---------------------------");
-           op=vr.validarByte("O que deseja actualizar: \n 1 - Estado Civil \n 2 - Endereço  \n 3 - Contacto \n 4 - Cargo (Somente para funcionarios do Corpo adminstrativo) \n 5 - Area Em Que Leciona (Somente para funcionarios que seijam Explicadores) \n 6 - Instituicão (Somente para funcionarios que seijam Explicadores e Estudantes)\n 0 - Sair",0,6);
-           switch(op){
-            case 1:
-             f.setEstadoCivil(vr.validarEstCivil());
-             vs.remove(posicao);
-             vs.add(posicao,f); 
-            break;
-            case 2:
-              f.setEndereco(vr.NotValid("Introduz o seu actual endereço"));
-              vs.remove(posicao);
-              vs.add(posicao,f);
-            break;
-            case 3:
-             f.setTelefone(vr.validarLong(" Número de telefone ", 820000000, 870000000));
-             vs.remove(posicao);
-             vs.add(posicao,f);
-            break;
-            case 4:
-             if(f instanceof Admin ){
-             ad=(Admin)vs.elementAt(posicao);
-             ad.setCargo(vr.adaptarCargo());
-             vs.remove(posicao);
-             vs.add(posicao,ad);
-             ad=(Admin)vs.elementAt(posicao);
-
-             }else{
-                 System.out.print("Nao pode realizar essa Opeacao");
-             }
-            break;
-            case 5:
-               if(f instanceof Explicador ){
-             ex=(Explicador)vs.elementAt(posicao);
-             ex.setAreaLeciona(vr.validarSemNr(" Area que Lecciona ",5, 15));
-             vs.remove(posicao);
-             vs.add(posicao,ex);
-             }else{
-                 System.out.println("-----------------------------\n Nao pode realizar essa Opeacao \n -----------------------------");
-             }
-            break;
-            case 6:
-             if(f instanceof Estudante ){
-             es=(Estudante)vs.elementAt(posicao);
-             es.setAreaLeciona(vr.validarSemNr(" Area que Lecciona ",5, 15));
-             vs.remove(posicao);
-             vs.add(posicao,es);
-             }else{
-                 System.out.print("Nao pode realizar essa Opeacao");
-             } 
-            break;
-            default:
-            break;}
-           vs.trimToSize();
-        }while(op!=0);
-      escreverFicheiroTXT();  
-    }
- public void ordenarNome(){
-        String nomedef1,nome[]=new String[2];
-        int ind;
-        ind=vs.size();
-     for(int i=0; i<ind;i++){
-           for(int j=0;j<ind-2;j++){
-               
-                f=(Funcionario)vs.elementAt(j);
-                nome[0]=f.getNome();
-                
-                f1=(Funcionario)vs.elementAt(j+1);
-                nome[1]=f1.getNome();
-                
-                nomedef1=f.getNome();
-                
-                Arrays.sort(nome);
-                if(nomedef1.equalsIgnoreCase(nome[0])){
-                   vs.remove(j);vs.remove(j);
-                   vs.add(j,f);
-                   vs.add(j+1,f1);vs.trimToSize();
-             }else{
-                   vs.remove(j+1);vs.remove(j);
-                   vs.add(j,f1);vs.add(j+1,f);vs.trimToSize();}
-         }
-           
-     }
-    
-    }
-    
-    
-    public void Remover()throws IOException, ClassNotFoundException{
-    int indice=0,cod;
-    byte x=0;
-    do{
-      indice=encontrarIndice();
-      vs.remove(indice);
-      vs.trimToSize();
-    x=vr.validarByte("Deseja Remover Outro Funcionario \n1-Sim \n0-Nao", (byte)0, (byte)1);
-    vs.trimToSize();
-    }while(x==1);
-    System.out.print(toString());
-    }
-    public byte encontrarIndice()throws IOException, ClassNotFoundException{
-    int cods=0,cod;
-    byte x=-1,y=0,c=0;
-    do{
-        cod=vr.validarInt("Codigo(no formato xxxxx)", 11111, 99999);
-        for(byte i=0; i<vs.size();i++){
-            f=(Funcionario)vs.elementAt(i);
-            cods= f.getCodFunc();
-            if(cods==cod){ x=i;y=0;c=0;}    
-         }
-        if(c==-1){c=-1; y=vr.validarByte("Funcionario Nao Encontrado! \n1 - Tentar Novamente \n0 - Cancelar", (byte)0, (byte)1);}
-    }while(y==1);
-    return x;
-    }
-    public void criaAdmin (String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro, float salario,String cargo) {
+   
+   public void criaAdmin (String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro, float salario,String cargo) {
         Admin a= new Admin ();
         a.setNome(nome);
         a.setApelido(apelido);
@@ -264,7 +96,7 @@ public class Opr {
         a.setCargo(cargo);
         vs.addElement(a);
     }
-    public void criaLicenciado(String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro,float salario,String areaForm,String areaLeciona,byte anosExperiencia, int anoDeFormacao) {
+   public void criaLicenciado(String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro,float salario,String areaForm,String areaLeciona,byte anosExperiencia, int anoDeFormacao) {
         Licenciado l = new Licenciado ();
         l.setNome(nome);
         l.setApelido(apelido);
@@ -285,7 +117,7 @@ public class Opr {
         l.setAnoDeFormacao(anoDeFormacao);
         vs.addElement(l);
            }
-    public void criaEstudante(String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro,float salario,String areaForm,String areaLeciona,int nivelEscolar, String instituicao) {
+   public void criaEstudante(String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro,float salario,String areaForm,String areaLeciona,int nivelEscolar, String instituicao) {
         Estudante e = new Estudante();
         e.setNome(nome);
         e.setApelido(apelido);
@@ -307,28 +139,111 @@ public class Opr {
         vs.addElement(e);
         
     }
-    
-    public void escreverFicheiroTXT(){
-        try{
-            FileWriter fw=new FileWriter("funcionarios.txt",false);
-            BufferedWriter bw=new BufferedWriter(fw);
-            for(int i=0; i<vs.size(); i++){
-                f=(Funcionario)(vs.elementAt(i));
-                bw.write(f.dadosFich());
-                bw.newLine();
-            }
-            bw.close();
-        }catch(IOException io){System.out.print(io.getMessage());}        
+  
+   //>>>>>>>>>>>>>>Actualizacao de Dados
+      public void menuActualizacao() {
+        byte op=0,posicao;
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>> Lista de Todos Funcionarios <<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        System.out.println(toString());
+        posicao=encontrarIndice();
+        f=(Funcionario)vs.elementAt(posicao);
+        Explicador ex;
+        Admin ad; 
+        Estudante es;
+        do{
+            System.out.println("=================== Menu de Actualização de Dados  ===========================");
+            System.out.println("==============================================================================");
+            op=vr.validarByte("O que deseja actualizar: \n 1 - Estado Civil \n 2 - Endereço  \n 3 - Contacto \n 4 - Cargo (Somente para funcionarios do Corpo adminstrativo) \n 5 - Area Em Que Leciona (Somente para funcionarios que seijam Explicadores) \n 6 - Instituicão (Somente para funcionarios que seijam Explicadores e Estudantes)\n 0 - Voltar",0,6);
+            switch(op){
+                case 1:
+                    f.setEstadoCivil(vr.validarEstCivil());
+                    vs.remove(posicao);
+                    vs.addElement(f);
+                    break;
+                case 2:
+                    f.setEndereco(vr.NotValid("Introduz o seu actual endereço"));
+                    vs.remove(posicao);
+                    vs.add(posicao,f);
+                    break;
+                case 3:
+                    f.setTelefone(vr.validarLong(" Número de telefone ", 820000000, 870000000));
+                    vs.remove(posicao);
+                    vs.add(posicao,f);
+                    break;
+                case 4:
+                    if(f instanceof Admin ){
+                        ad=(Admin)vs.elementAt(posicao);
+                        ad.setCargo(vr.adaptarCargo());
+                        vs.remove(posicao);
+                        vs.add(posicao,ad);
+                        ad=(Admin)vs.elementAt(posicao);
+                        
+                    }else{
+                        System.out.println("Nao pode realizar essa Opeacao");
+                    }
+                    break;
+                case 5:
+                    if(f instanceof Explicador ){
+                        ex=(Explicador)vs.elementAt(posicao);
+                        ex.setAreaLeciona(vr.validarSemNr(" Area que Lecciona ",5, 15));
+                        vs.remove(posicao);
+                        vs.add(posicao,ex);
+                    }else{
+                        System.out.println("================================\n Nao pode realizar essa Opeacao \n =======================================");
+                    }
+                    break;
+                case 6:
+                    if(f instanceof Estudante ){
+                        es=(Estudante)vs.elementAt(posicao);
+                        es.setAreaLeciona(vr.validarSemNr(" Area que Lecciona ",5, 15));
+                        vs.remove(posicao);
+                        vs.add(posicao,es);
+                    }else{
+                        System.out.print("Nao pode realizar essa Opeacao");
+                    }
+                    break;
+                default:
+                    
+                    break;}
+            vs.trimToSize();
+            System.out.println("====================== Actualização Efectuada ================================");
+           }while(op!=0);
+       ficheiro.esc_VectorEmTXT("funcionarios", vs,false);
     }
-    public void escreverFicheiroOdj(String fichOd){
-        try{
-            FileOutputStream fos= new FileOutputStream(fichOd);
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
-            oos.writeObject(vs);
-            oos.close();
-        }catch(IOException ios){System.out.print(ios.getMessage());}
+   //============== Vector ==============
+   public void Remover(){
+       int indice=0,cod;
+       byte x=0;
+       indice=encontrarIndice();
+       if(indice!=-1){
+           vs.remove(indice);
+           vs.trimToSize();
+           System.out.println("==========================================================");
+           System.out.println("================== Removido Com Sucesso ==================");
+           System.out.println("==========================================================");
+       }
+;
     }
-    public String toString(){
+   public byte encontrarIndice(){
+    int cod;
+    byte x=-1,y=0,c=-1;
+    do{
+        cod=vr.validarInt("Codigo(no formato xxxxx)", 11111, 99999);
+        for(byte i=0; i<vs.size();i++){
+            f=(Funcionario)vs.elementAt(i);
+            if(f.getCodFunc()==cod){ x=i;y=0;c=0;}
+        }
+        if(c==-1){c=-1; System.err.println(">>>>>>>>>>>>>>Funcionario Nao Encontrado<<<<<<<<<<<<<<<<<<<!" );y=vr.validarByte("\n1 - Tentar Novamente \n0 - Cancelar", (byte)0, (byte)1);}
+    }while(y==1);
+    return x;
+    }
+   
+   //============== Ficheiro txt=========
+   public void escreverFicheiroTXT(String nomeFich){ficheiro.esc_VectorEmTXT(nomeFich, vs, false); };
+   public void escreverFicheiroDAT(String nomeFich){
+        ficheiro.esc_VectorEmDAT(nomeFich, vs);
+    };
+   public String toString(){
         String ver="";
         Funcionario f;
         for(int i = 0; i < vs.size(); i++){
