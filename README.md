@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <img src="img/sgrh--green-2.png" width="250px">
 
 # Sistema de Gestao de Rescursos Humanos
@@ -22,3 +23,9 @@ Copyright (c) Henrique Mateus. All rights reserved.
 
 
 
+=======
+# SGRH-Java
+Sistema de Gestao de Recursos humanos. 
+É um projecto ainda em desenvolvimento, que consiste inicialmente num sistema que faza operações básicas de recursos humanos.
+Como referência foca-se, como ponto de partida num centro de explicação, tentando estruturar os recursos humanos da mesma e operações sobre tais recursos... 
+>>>>>>> 94cbf61c50dbb54c2d5ac2f36d72c56cf44e7969
