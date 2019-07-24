@@ -1,6 +1,6 @@
-
+<p align="center">
 <img src="img/sgrh--green-2.png" width="250px" text-align="center">
-
+</p>
 # Sistema de Gestao de Rescursos Humanos
 ## Descrição
 Recursos Humanos é um requisito que sem ele não existe empresa/instituição nenhuma.
@@ -10,9 +10,9 @@ Este Sistema (SGRH) tem como objectivo simplificar/melhorar a vida dos gestores 
 Sistema de Gestao de Recursos humanos. 
 É um projecto ainda em desenvolvimento, que consiste inicialmente num sistema que faza operações básicas de recursos humanos.
 Como referência foca-se, como ponto de partida num centro de explicação, tentando estruturar os recursos humanos da mesma e operações sobre tais recursos... 
-
-
+<p align="center">
 ![Workflow](img/img-2.jpg)
+</p>
 ## Requisitos
 - [Java developement Kit 8 update 191](https://WWW.JAVA.COM/) (or above);
 - [Net Beans 8.0.2](https://www.netbeans.com/) (recomended);
