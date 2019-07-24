@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-<img src="img/sgrh--green-2.png" width="250px">
+
+<img src="img/sgrh--green-2.png" width="250px" text-align="center">
 
 # Sistema de Gestao de Rescursos Humanos
 ## Descrição
