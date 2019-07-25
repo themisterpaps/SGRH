@@ -28,7 +28,8 @@ Como referência foca-se, como ponto de partida num centro de explicação, tent
 - Cálculo das despesas.
 - Gerar relatórios
 ## License
-[MIT](LICENSE.md)
+[MIT](LICENSE)
+
 Copyright (c) Henrique Mateus. All rights reserved.
 
 
