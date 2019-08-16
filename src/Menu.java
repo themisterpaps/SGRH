@@ -46,19 +46,15 @@ public class Menu {
            do{
            System.out.println("============================= Menu Operações =================================");
            System.out.println("==============================================================================");
-           System.out.println(" 1 - Lista de Funcionarios funcionarios \n 2 - Remover Funcionarios da Empresa \n 3 - Actualizar Dados \n 0 - Voltar");
+           System.out.println(" \n 1 - Remover Funcionarios da Empresa \n 2 - Actualizar Dados \n 0 - Voltar");
            System.out.println("==============================================================================");
-           op=v.validarByte("a opcao",0,3);
+           op=v.validarByte("a opcao",0,2);
             switch(op){
-                case 1: 
-                    //opr.ordenarNome();
-                    //opr.escreverFicheiroTXT("funcionarios.txt");
-                    break;
-                case 2:
+                case 1:
                    opr.Remover();
                    opr.escreverFicheiroDAT("funcionarios.dat");
                     break;
-                case 3:
+                case 2:
                    opr.menuActualizacao();
                 break;
                 default: 
@@ -118,4 +114,27 @@ public class Menu {
         }catch(NumberFormatException nfe){System.out.print(nfe.getMessage());}
           
     }
+    public void menuSal() {
+        String tipo="";
+        byte op;
+        float sal=0 ;
+                op=v.validarByte("o tipo de contrato de  funcionario: \n 1-Contrato por hora \n 2-Contrato por Presenca \n 3-Contrato por servicos \n 4-Contrato temporario",1,4);
+                switch(op){
+                    case 1: System.out.println("-----Contrato por hora----"); 
+                            tipo="hora";
+                            break;
+                    case 2: System.out.println("-----Contrato por presenca-------"); 
+                            tipo="Presenca";
+                             break;
+                    case 3: System.out.println("-----Contrato por Servicos----------");
+                            tipo="servicos";
+                            break;
+                    case 4: System.out.println("-----Contrato temporario----------"); 
+                            tipo="temporario";
+                            break;
+                    default:
+                        System.out.println("Opcao invalida. Tente again !!!!!!!!");
+                }     
+       
+   }
 }

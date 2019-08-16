@@ -6,12 +6,12 @@ public class Tarefas {
     private Vector vt = new Vector(); Funcionario fun;
     private Validacoes v;
     private Adpt_Ficheiro ficheiro;
-    private Salario s;
+    private Menu m;
     
     //Contructor
     public Tarefas(){
         ficheiro = new  Adpt_Ficheiro();
-        s = new Salario();
+        m= new Menu();
     }
     public void cadastro() {
     String nome, apelido, bi, genero, endereco, nacionalidade, estadoCivil, dataNasc,dataRegistro, areaForm, areaLeciona,instituicao,cargo;
@@ -34,8 +34,7 @@ public class Tarefas {
         telefone = v.validarLong(" Número de telefone ", 820000000, 870000000);
         nuit = v.validarInt(" NUIT ",100000000 , 999999999);
         dataRegistro = v.dataActual();
-        s.menuSal();
-        salario = s.getSalario();
+         m.menuSal();
         criterio = v.adapatarOpcoes(" Funçao: \n 1-Administração \n 2-Explicação ", "A", "E").charAt(0);
         if(criterio == 'A' || criterio == 'a'){
             cargo = v.adaptarCargo();
@@ -67,6 +66,7 @@ public class Tarefas {
     // Criacao de Objectos
     public void criaAdmin (String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro, float salario,String cargo) {
         Admin a= new Admin ();
+        salario = a.SalarioLiquido(0, 0);
         a.setNome(nome);
         a.setApelido(apelido);
         a.setBi(bi);
@@ -85,6 +85,7 @@ public class Tarefas {
     }
     public void criaLicenciado(String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro,float salario,String areaForm,String areaLeciona,byte anosExperiencia, int anoDeFormacao) {
         Licenciado l = new Licenciado ();
+         salario = l.salarioLiquido(0, 0);
         l.setNome(nome);
         l.setApelido(apelido);
         l.setBi(bi);
@@ -107,6 +108,7 @@ public class Tarefas {
     }
     public void criaEstudante(String nome, String apelido, String bi,int codFunc, String genero, String endereco, String nacionalidade, String estadoCivil, String dataNasc,long telefone, int nuit,String dataRegistro,float salario,String areaForm,String areaLeciona,int nivelEscolar, String instituicao) {
         Estudante e = new Estudante();
+        salario = e.salarioLiquido(0, 0);
         e.setNome(nome);
         e.setApelido(apelido);
         e.setBi(bi);
