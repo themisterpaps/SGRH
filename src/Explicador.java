@@ -13,7 +13,7 @@ public class Explicador extends Funcionario {
     public void setAreaLeciona(String areaLeciona) {  this.areaLeciona = areaLeciona;}
     public String getAreaDeForm() { return areaForm;   }
     public String getAreaLeciona() {return areaLeciona;}
-    public String toString() {return super.toString()+"\n Area de Formacão: "+areaForm + "\n Area que Leciona: " + areaLeciona ; }
+    public String toString() {return super.toString()+"\n Area de Formacão        : "+areaForm + "\n Area que Leciona        : " + areaLeciona ; }                                                                                               
     public String dadosFich(){return super.dadosFich()+"/E"+"/"+areaForm+"/"+areaLeciona;}
 }
     

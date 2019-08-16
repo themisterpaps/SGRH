@@ -10,7 +10,10 @@ public class Admin extends Funcionario {
     public String getCargo() {return cargo;}
     public void setCargo(String cargo) {this.cargo = cargo;}
     
-
-    public String toString() {return super.toString()+"\n Cargo: "+cargo; }
+    public float SalarioLiquido(int nrFaltas,int horasExtMes){
+        salario=salDia*((float)((1+0.35)*(24-nrFaltas)))+horasExtMes*salHExtra;
+        return salario;
+    }
+    public String toString() {return super.toString()+"\n Cargo                   : "+cargo; }
     public String dadosFich(){return super.dadosFich()+"/A"+"/"+cargo;}
 }

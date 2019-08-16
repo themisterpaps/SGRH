@@ -1,6 +1,6 @@
 package sgrh;
 import java.io.*;
-public class Funcionario implements Serializable{
+public class Funcionario implements Serializable, SalarioInterface{
     protected String nome, apelido, bi, genero, endereco, nacionalidade, estadoCivil, dataNasc,dataRegistro;
     protected long telefone;
     protected int codFunc, nuit;
@@ -53,8 +53,17 @@ public class Funcionario implements Serializable{
     public void setCodFunc(int codFunc) {this.codFunc = codFunc;}
     public void setNuit(int nuit) {this.nuit = nuit;}  
     public void setSalario(float salario) {  this.salario = salario; }
+    public float salarioLiquido(){
+        salario=salDia*(22);
+        return salario;
+    }
     
     //ToString
     public String dadosFich(){return codFunc+"/"+nome+"/"+apelido+"/"+bi+"/"+genero+"/"+endereco+"/"+nacionalidade+"/"+estadoCivil+"/"+dataNasc+"/"+telefone+"/"+nuit+"/"+dataRegistro+"/"+salario;}
-   public String toString(){return "Codigo do Funcionario: "+codFunc+"\n nome: "+nome+"\n Apelido: "+apelido+"\n BI: "+bi+"\n Genero: "+genero+"\n Endereco: "+endereco+"\n Nacionalidade: "+nacionalidade+"\n Estado Civil: "+estadoCivil+"\n Telefone: "+telefone+"\n Data de Nascimento: "+dataNasc+"\n Nuit: "+nuit+"\n Data de Registro: "+dataRegistro + "\n Salário: "+ salario;}
+   public String toString(){String x="";
+   x=" Codigo do Funcionario   : "+codFunc+"\n nome:                   : "+nome+" "+apelido+"\n Bilhete de Identificação: "+bi+"\n Genero                  : "+genero;
+   x+= "\n Endereco                : "+endereco+"\n Nacionalidade           : "+nacionalidade+"\n Estado Civil            : "+estadoCivil+"\n Telefone                : "+telefone;   
+   x+= "\n Data de Nascimento      : "+dataNasc+"\n Nuit                    : "+nuit+"\n Data de Registro        : "+dataRegistro + "\n Salário                 : "+ salario;
+   return x;}
+                                                                                                                                                                                                                                                                            
 }

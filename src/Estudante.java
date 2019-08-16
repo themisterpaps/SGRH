@@ -15,7 +15,11 @@ public class Estudante extends Explicador {
     public String getInstituicao() {return instituicao;}
     public void setNivel(int nivelEscolar) {this.nivelEscolar = nivelEscolar; }
     public void setInstituicao(String instituicao) {this.instituicao = instituicao;}
-    
-    public String toString() {return super.toString()+"\n Nivel Escolar: "+nivelEscolar+ "\n Instituicao: " + instituicao ; }
+      public float salarioLiquido(int nrFaltas,int horasExtMes){
+        salario=salDia*(24-nrFaltas)+horasExtMes*salHExtra;
+        return salario;
+    }
+    public String toString() {return super.toString()+"\n Nivel Escolar           : "+nivelEscolar+ "\n Instituicao             : " + instituicao ; }
+                                                                                                        
     public String dadosFich(){return super.dadosFich()+"/E"+"/"+nivelEscolar+"/"+instituicao;}
 }
