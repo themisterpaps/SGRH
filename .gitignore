@@ -2,5 +2,7 @@
 ## files generated When you compile the project.
 ##
 #compile_files
-build/classes/
+build/classes/ 
 lib/
+dist/
+*.class
