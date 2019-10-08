@@ -1,8 +1,1 @@
-﻿## Ignore NetBeans temporary files, build results, and
-## files generated When you compile the project.
-##
-#compile_files
-build/classes/ 
-lib/
-dist/
 *.class
