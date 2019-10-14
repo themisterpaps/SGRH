@@ -1,5 +1,5 @@
 <p align="center">
-<img src="img/sgrh--green.png" width="250px">
+<img src="img/sgrh--green.png" width="150px">
 </p>
 
 # Sistema de Gestao de Rescursos Humanos
