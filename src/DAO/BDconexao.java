@@ -1,17 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
-
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-/*
-sta classe é responsavel pela comunicação do Aplicativo com a base de dados MySQL;
- */
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -33,7 +20,7 @@ public class BDconexao implements Serializable {
     public BDconexao() {
         this.Host = "localhost"; // 127.0.0.1 = localhost
         this.porta = "3306";
-        this.BD = "Estudante";
+        this.BD = "SGRH";
         this.user = "root";
         this.password = "";
     }
