@@ -1,6 +1,7 @@
-
 package view;
 
+import control.Validacoes;
+import dao.DadosPessais1;
 import java.awt.*;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 public class PlanoDeSaude extends JFrame{
+    private String dataI, dataF, anoI, anoF,cursoc, niveln;
+    private int nrAgrg;
     JButton b[]=new JButton[5];
     JPanel p[]= new JPanel[8];
     JLabel l[]=new JLabel[10];
@@ -126,9 +129,9 @@ public class PlanoDeSaude extends JFrame{
         p[1].add(sp[1]);
         
         p[1].add(l[2]);
-        sp[1] = new JSpinner();
-        sp[1].setPreferredSize(new Dimension(50,20));
-        p[1].add(sp[1]);
+        sp[2] = new JSpinner();
+        sp[2].setPreferredSize(new Dimension(50,20));
+        p[1].add(sp[2]);
         
         p[1].setBackground(white);
         gbc.gridx=0;
@@ -196,8 +199,8 @@ public class PlanoDeSaude extends JFrame{
         anterior.setFont(new Font("Sans Serif",Font.BOLD,14));
         anterior.addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
-                setVisible(false);
-               DadosPessoais dv=new DadosPessoais();
+                    setVisible(false);
+                    //DadosPessoais dv = new DadosPessoais();
                 }
             });
         
@@ -209,7 +212,7 @@ public class PlanoDeSaude extends JFrame{
         proximo.setFont(new Font("Sans Serif",Font.BOLD,14));
         proximo.addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
-                    Experiencia ex=new Experiencia();
+                    cadastro2();
                 }
             }); 
         p[5].add(anterior);
@@ -223,6 +226,29 @@ public class PlanoDeSaude extends JFrame{
         gbc.gridy=6;
         add(p[5],gbc);
     }
-    
-    
+    public void cadastro2(){
+        //Validacoes
+        Validacoes v = new Validacoes();
+        //Data Inicio
+        dataI = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
+        if(!v.validarData(dataI, 1900, 2019, "Data Inicio")){return;}
+        //Data Fim
+        dataF = new SimpleDateFormat("dd/MM/yyyy").format(sp[1].getValue());
+        if(!v.validarData(dataF, 2019, 2050, "Data Fim")){return;}
+        //Agregado Familiar
+        if(!v.validarInt(Integer.parseInt(sp[2].getValue().toString()), 0, 50, "Agregado Familiar")){return;} else{nrAgrg = Integer.parseInt(sp[2].getValue().toString());}
+        //Curso
+        cursoc = cb[0].getSelectedItem().toString();
+        //Nivel Academico
+        niveln = cb[1].getSelectedItem().toString();
+        //Ano Inicio
+        anoI = new SimpleDateFormat("dd/MM/yyyy").format(sp[3].getValue());
+        if(!v.validarData(anoI, 2000, 2019, "Ano Inicio")){return;}
+        //Ano Fim/Previsao
+        anoF = new SimpleDateFormat("dd/MM/yyyy").format(sp[4].getValue());
+        if(!v.validarData(anoF, 2019, 2050, "Ano Fim/Previsao")){return;}
+        
+        setVisible(false);
+        Experiencia ex=new Experiencia();
+    }
 }
