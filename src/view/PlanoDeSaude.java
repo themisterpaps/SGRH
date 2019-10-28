@@ -1,7 +1,7 @@
 package view;
 
 import control.Validacoes;
-import DAO.DadosPessais1;
+import VO.DadosPessais1;
 import java.awt.*;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;

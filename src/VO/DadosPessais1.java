@@ -1,4 +1,4 @@
-package DAO;
+package VO;
 public class DadosPessais1 {
     private String nome, apelido,nacionalidade, bi, estCivil, data, sexo;
     private int nib, nuit;
