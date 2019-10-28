@@ -29,7 +29,7 @@ public class Admin extends JFrame {
     GridBagConstraints gbc = new GridBagConstraints();
 
     public Admin() {
-        conexao = dao.ModuloConexao.conector();
+        conexao = DAO.ModuloConexao.conector();
         setTitle("Cadastro || S.G.R.H");
         setLocation(250, 100);
         setSize(900, 700);

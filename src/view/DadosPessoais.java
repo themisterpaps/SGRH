@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 import control.Validacoes;
-import dao.DadosPessais1;
+import DAO.DadosPessais1;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
