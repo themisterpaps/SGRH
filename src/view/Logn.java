@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import dao.ModuloConexao.*;
+import DAO.ModuloConexao.*;
 
 public class Logn extends JFrame {
 
@@ -37,7 +37,7 @@ public class Logn extends JFrame {
         white = new Color(247, 247, 247);
         gray = new Color(149, 156, 147);
         orange = new Color(245, 139, 31);
-        conexao = dao.ModuloConexao.conector();
+        conexao = DAO.ModuloConexao.conector();
 
         //Layout Sttings
         setLayout(new GridBagLayout());
