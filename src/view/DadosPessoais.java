@@ -78,7 +78,7 @@ public class DadosPessoais extends JFrame {
     
     private void dadosPessoais() {
         //Todas As Labels
-        l[0] = new JLabel("Username: ");
+        l[0] = new JLabel("Nome: ");
         l[1] = new JLabel("Apelido: ");
         l[2] = new JLabel("Bilhete de Identidade: ");
         l[3] = new JLabel("Sexo");
@@ -95,12 +95,12 @@ public class DadosPessoais extends JFrame {
         }
 
         // Linha 1
-        tf[0] = new JTextField("Username", 16);
-        //Username Placeholder
+        tf[0] = new JTextField("Nome", 16);
+        //Nome Placeholder
         tf[0].addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if(tf[0].getText().equalsIgnoreCase("Username")){
+                if(tf[0].getText().equalsIgnoreCase("Nome")){
                     tf[0].setText("");
                     tf[0].setForeground(Color.BLACK);
                 }
@@ -108,7 +108,7 @@ public class DadosPessoais extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 if(tf[0].getText().equals("")){
-                    tf[0].setText("Username");
+                    tf[0].setText("Nome");
                     tf[0].setForeground(Color.GRAY);
                 }
             }
@@ -338,7 +338,7 @@ public class DadosPessoais extends JFrame {
         Boolean isEmpty=false;
         
         //Check if is Empty
-        if(tf[0].getText().equalsIgnoreCase("Username")){isEmpty=true;}//username
+        if(tf[0].getText().equalsIgnoreCase("Nome")){isEmpty=true;}//username
         if(tf[1].getText().equalsIgnoreCase("Apelido")){isEmpty=true;}//apelido
         if(tf[2].getText().equalsIgnoreCase("Número de Bilhete de Identidade")){isEmpty=true;}//BI
         if(tf[3].getText().equalsIgnoreCase("NIB")){isEmpty=true;}//NIB
