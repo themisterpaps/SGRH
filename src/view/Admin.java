@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Connection;
 import java.sql.*;
 import java.sql.PreparedStatement;
@@ -19,6 +21,7 @@ public class Admin extends JFrame {
     JLabel l[] = new JLabel[5];
     JComboBox cb[] = new JComboBox[5];
     JPanel p[] = new JPanel[8];
+    JTextField tf[]=new JTextField[5];
 
     String cargoDe[] = {"Chefe", "Gerente", "Faxineiro", "Director(a)", "Gestor",
         "Advogado", "Chefe", "Tecnico"};
@@ -80,9 +83,11 @@ public class Admin extends JFrame {
         //l[0] = new JLabel("Ano de Formacao:");
         l[1] = new JLabel("   Cargo:");
         l[2] = new JLabel("Nome da Empresa:");
+        l[3] = new JLabel("Username");
+        l[4] = new JLabel("Password");
 
         //Label Propriedade
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 4; i++) {
             l[i].setFont(label_Font);
             l[i].setForeground(blue);
             l[i].setBackground(white);
@@ -112,11 +117,36 @@ public class Admin extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 2;
         add(p[1], gbc);
+        
+        //Linha 2
+            tf[0] = new JTextField("Username", 16);
+        
+        p[2] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        p[2].add(l[3]);
+        p[2].add(tf[0]);
+        tf[0].setForeground(white);
+        
+        p[2].setBackground(white);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(p[2], gbc);
+        
+          //Linha 3
+        tf[1] = new JTextField("Password", 16);
+        p[3] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        p[3].add(l[4]);
+        p[3].add(tf[1]);
+        tf[1].setForeground(white);
+        
+        p[3].setBackground(white);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        add(p[3], gbc);
     }
 
     private void butoes() {
         //Butoes
-        p[5] = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 25));
+        p[6] = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 25));
         JButton anterior = new JButton("Anterior");
         anterior.setBackground(orange);
         anterior.setPreferredSize(new Dimension(120, 32));
@@ -141,15 +171,15 @@ public class Admin extends JFrame {
                 MenuPrincipal mn = new MenuPrincipal();
             }
         });
-        p[5].add(anterior);
-        p[5].add(proximo);
+        p[6].add(anterior);
+        p[6].add(proximo);
 
-        p[5].setBackground(white);
+        p[6].setBackground(white);
         gbc.fill = GridBagConstraints.NONE;
         gbc.gridwidth = 0;
         gbc.gridx = 0;
-        gbc.gridy = 3;
-        add(p[5], gbc);
+        gbc.gridy = 5;
+        add(p[6], gbc);
     }
     public void cadastro4(){
         cargo = cb[1].getSelectedItem().toString();
