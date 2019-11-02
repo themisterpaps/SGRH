@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.*;
+import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -12,8 +13,9 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
-public class Admin extends JFrame {
+public class Professor extends JFrame {
     private String cargo;
     Connection conexao = null;
     PreparedStatement pst = null;
@@ -23,7 +25,7 @@ public class Admin extends JFrame {
     JPanel p[] = new JPanel[8];
     JTextField tf[]=new JTextField[5];
 
-    String cargoDe[] = {"Chefe", "Gerente", "Faxineiro", "Director(a)", "Gestor",
+    String cargoDe[] = {"Matematim", "Portugues", "Ingl", "Director(a)", "Gestor",
         "Advogado", "Chefe", "Tecnico"};
     String nomeDe[] = {"A", "B", "C"};
     //Default
@@ -31,7 +33,7 @@ public class Admin extends JFrame {
     Color blue, white, orange, gray;
     GridBagConstraints gbc = new GridBagConstraints();
 
-    public Admin() {
+    public Professor() {
         conexao = DAO.ModuloConexao.conector();
         setTitle("Cadastro || S.G.R.H");
         setLocation(250, 100);
@@ -63,7 +65,7 @@ public class Admin extends JFrame {
         //Imagem 2
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        JLabel img2 = new JLabel("", new ImageIcon("src/images/m.jpg"), JLabel.LEFT);
+        JLabel img2 = new JLabel("", new ImageIcon("src/images/o.png"), JLabel.LEFT);
 
         gbc.gridwidth = 0;
         gbc.gridx = 0;
@@ -81,13 +83,13 @@ public class Admin extends JFrame {
 
     private void admin() {
         //l[0] = new JLabel("Ano de Formacao:");
-        l[1] = new JLabel("   Cargo:");
+        l[1] = new JLabel("Disciplina");
         l[2] = new JLabel("Nome da Empresa:");
-        l[3] = new JLabel("Username");
-        l[4] = new JLabel("Password");
+        l[3] = new JLabel("Turma");
+     
 
         //Label Propriedade
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 3; i++) {
             l[i].setFont(label_Font);
             l[i].setForeground(blue);
             l[i].setBackground(white);
@@ -119,18 +121,8 @@ public class Admin extends JFrame {
         add(p[1], gbc);
         
         
-        //Imagem 2
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        JLabel img2 = new JLabel("", new ImageIcon("src/images/p.png"), JLabel.LEFT);
-
-        gbc.gridwidth = 0;
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        add(img2, gbc);
-        
         //Linha 2
-            tf[0] = new JTextField("Username: ", 16);
+            tf[0] = new JTextField("Turma: ", 16);
         
         p[2] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         p[2].add(l[3]);
@@ -142,17 +134,6 @@ public class Admin extends JFrame {
         gbc.gridy = 4;
         add(p[2], gbc);
         
-          //Linha 3
-        tf[1] = new JTextField("Password: ", 16);
-        p[3] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        p[3].add(l[4]);
-        p[3].add(tf[1]);
-        tf[1].setForeground(white);
-        
-        p[3].setBackground(white);
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        add(p[3], gbc);
     }
 
     private void butoes() {
