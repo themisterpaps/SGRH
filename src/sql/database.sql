@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Out-2019 às 19:43
+-- Generation Time: 02-Nov-2019 às 13:58
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -187,46 +187,7 @@ CREATE TABLE `contracto` (
   `idFuncionario` int(4) NOT NULL,
   `dataInicio` date DEFAULT NULL,
   `dataFim` date DEFAULT NULL,
-  `tipo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `valHorasExtras` decimal(4,2) DEFAULT NULL,
-  `valFaltas` decimal(4,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `departamento`
---
-
-CREATE TABLE `departamento` (
-  `idDept` int(4) NOT NULL,
-  `nomeDept` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `codChefe` int(4) NOT NULL,
-  `totalTrab` int(3) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `dependentes`
---
-
-CREATE TABLE `dependentes` (
-  `idFuncionario` int(11) NOT NULL,
-  `nomeDep` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `dataNasc` date DEFAULT NULL,
-  `grauPar` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `disciplina`
---
-
-CREATE TABLE `disciplina` (
-  `idDisciplina` int(4) NOT NULL,
-  `nomeDisciplina` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
+  `tipo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -250,7 +211,10 @@ CREATE TABLE `experiencia` (
 CREATE TABLE `formacao` (
   `idFuncionario` int(11) NOT NULL,
   `ano` year(4) DEFAULT NULL,
-  `formacao` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
+  `formacao` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dataInicio` date NOT NULL,
+  `dataFIm` date NOT NULL,
+  `nomeFormacao` varchar(45) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -285,10 +249,9 @@ CREATE TABLE `funcionario` (
 
 CREATE TABLE `planosaude` (
   `idFuncionario` int(11) NOT NULL,
-  `codPlano` int(11) NOT NULL,
-  `tipo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dataInicio` date DEFAULT NULL,
-  `dataFim` date DEFAULT NULL
+  `dataFim` date DEFAULT NULL,
+  `nrAgre` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -320,43 +283,6 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `professor_disciplina`
---
-
-CREATE TABLE `professor_disciplina` (
-  `idFuncionario` int(4) NOT NULL,
-  `idDisciplina` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `professor_turma`
---
-
-CREATE TABLE `professor_turma` (
-  `idFuncionario` int(4) NOT NULL,
-  `idTurma` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Acionadores `professor_turma`
---
-DELIMITER $$
-CREATE TRIGGER `AFTER_delete_professorTurma` AFTER DELETE ON `professor_turma` FOR EACH ROW BEGIN
-  update professor p
-  set p
-  .totalTurmas= p.totalTurmas-1
-    where p.idFuncionario=old.idFuncionario;
-
-
-end
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `remuneracao`
 --
 
@@ -369,18 +295,6 @@ CREATE TABLE `remuneracao` (
   `dataPagamento` date NOT NULL,
   `salarioLiquido` decimal(8,2) DEFAULT NULL,
   `IRPS` decimal(3,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `turma`
---
-
-CREATE TABLE `turma` (
-  `idTurrma` int(4) NOT NULL,
-  `nrEstuds` int(3) DEFAULT NULL,
-  `idDisplina` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -407,25 +321,6 @@ ALTER TABLE `contracto`
   ADD PRIMARY KEY (`idFuncionario`);
 
 --
--- Indexes for table `departamento`
---
-ALTER TABLE `departamento`
-  ADD PRIMARY KEY (`idDept`,`codChefe`),
-  ADD KEY `codChefe` (`codChefe`);
-
---
--- Indexes for table `dependentes`
---
-ALTER TABLE `dependentes`
-  ADD PRIMARY KEY (`idFuncionario`);
-
---
--- Indexes for table `disciplina`
---
-ALTER TABLE `disciplina`
-  ADD PRIMARY KEY (`idDisciplina`);
-
---
 -- Indexes for table `experiencia`
 --
 ALTER TABLE `experiencia`
@@ -447,7 +342,7 @@ ALTER TABLE `funcionario`
 -- Indexes for table `planosaude`
 --
 ALTER TABLE `planosaude`
-  ADD PRIMARY KEY (`idFuncionario`,`codPlano`);
+  ADD PRIMARY KEY (`idFuncionario`);
 
 --
 -- Indexes for table `professor`
@@ -456,31 +351,10 @@ ALTER TABLE `professor`
   ADD PRIMARY KEY (`idFuncionario`);
 
 --
--- Indexes for table `professor_disciplina`
---
-ALTER TABLE `professor_disciplina`
-  ADD PRIMARY KEY (`idFuncionario`,`idDisciplina`),
-  ADD KEY `idDisciplina` (`idDisciplina`);
-
---
--- Indexes for table `professor_turma`
---
-ALTER TABLE `professor_turma`
-  ADD PRIMARY KEY (`idFuncionario`,`idTurma`),
-  ADD KEY `idTurma` (`idTurma`);
-
---
 -- Indexes for table `remuneracao`
 --
 ALTER TABLE `remuneracao`
   ADD PRIMARY KEY (`idFuncionario`);
-
---
--- Indexes for table `turma`
---
-ALTER TABLE `turma`
-  ADD PRIMARY KEY (`idTurrma`,`idDisplina`),
-  ADD KEY `idDisplina` (`idDisplina`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -491,12 +365,6 @@ ALTER TABLE `turma`
 --
 ALTER TABLE `cargo`
   MODIFY `idCargo` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `departamento`
---
-ALTER TABLE `departamento`
-  MODIFY `idDept` int(4) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `funcionario`
@@ -519,18 +387,6 @@ ALTER TABLE `administrador`
 --
 ALTER TABLE `contracto`
   ADD CONSTRAINT `contracto_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
-
---
--- Limitadores para a tabela `departamento`
---
-ALTER TABLE `departamento`
-  ADD CONSTRAINT `departamento_ibfk_1` FOREIGN KEY (`codChefe`) REFERENCES `administrador` (`idFuncionario`);
-
---
--- Limitadores para a tabela `dependentes`
---
-ALTER TABLE `dependentes`
-  ADD CONSTRAINT `dependentes_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
 
 --
 -- Limitadores para a tabela `experiencia`
@@ -557,30 +413,10 @@ ALTER TABLE `professor`
   ADD CONSTRAINT `idFuncioanario` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `professor_disciplina`
---
-ALTER TABLE `professor_disciplina`
-  ADD CONSTRAINT `professor_disciplina_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `professor` (`idFuncionario`),
-  ADD CONSTRAINT `professor_disciplina_ibfk_2` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`);
-
---
--- Limitadores para a tabela `professor_turma`
---
-ALTER TABLE `professor_turma`
-  ADD CONSTRAINT `professor_turma_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `professor` (`idFuncionario`),
-  ADD CONSTRAINT `professor_turma_ibfk_2` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurrma`);
-
---
 -- Limitadores para a tabela `remuneracao`
 --
 ALTER TABLE `remuneracao`
   ADD CONSTRAINT `remuneracao_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
-
---
--- Limitadores para a tabela `turma`
---
-ALTER TABLE `turma`
-  ADD CONSTRAINT `turma_ibfk_1` FOREIGN KEY (`idDisplina`) REFERENCES `disciplina` (`idDisciplina`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
