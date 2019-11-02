@@ -200,7 +200,7 @@ public class PlanoDeSaude extends JFrame{
         anterior.addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
                     setVisible(false);
-                    //DadosPessoais dv = new DadosPessoais();
+                    DadosPessoais dv = new DadosPessoais();
                 }
             });
         

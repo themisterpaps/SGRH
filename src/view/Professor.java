@@ -24,17 +24,16 @@ public class Professor extends JFrame {
     JComboBox cb[] = new JComboBox[5];
     JPanel p[] = new JPanel[8];
     JTextField tf[]=new JTextField[5];
+    JSpinner sp[]=new JSpinner[5];
 
-    String cargoDe[] = {"Matematim", "Portugues", "Ingl", "Director(a)", "Gestor",
-        "Advogado", "Chefe", "Tecnico"};
-    String nomeDe[] = {"A", "B", "C"};
+    String cargoDe[] = {"Matemática", "Português", "Historia","Química","Geografia", "Empreendedorismo", "Física", "Química", "Biologia"};
+
     //Default
     Font Butoes_Font, label_Font, ComboBox_Font;
     Color blue, white, orange, gray;
     GridBagConstraints gbc = new GridBagConstraints();
 
     public Professor() {
-        conexao = DAO.ModuloConexao.conector();
         setTitle("Cadastro || S.G.R.H");
         setLocation(250, 100);
         setSize(900, 700);
@@ -72,7 +71,7 @@ public class Professor extends JFrame {
         gbc.gridy = 1;
         add(img2, gbc);
 
-        admin();
+        prof();
 
         butoes();
 
@@ -81,15 +80,11 @@ public class Professor extends JFrame {
         setVisible(true);
     }
 
-    private void admin() {
-        //l[0] = new JLabel("Ano de Formacao:");
+    private void prof() {
         l[1] = new JLabel("Disciplina");
-        l[2] = new JLabel("Nome da Empresa:");
-        l[3] = new JLabel("Turma");
-     
-
+        l[2] = new JLabel("Nr de Turmas: ");
         //Label Propriedade
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 2; i++) {
             l[i].setFont(label_Font);
             l[i].setForeground(blue);
             l[i].setBackground(white);
@@ -97,15 +92,6 @@ public class Professor extends JFrame {
 
         //Linha 1
         p[1] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        //p[1].add(l[0]);
-
-        cb[0] = new JComboBox(cargoDe);
-        cb[0].setFont(ComboBox_Font);
-        cb[0].setForeground(blue);
-        cb[0].setBackground(white);
-        cb[0].setPreferredSize(new Dimension(180, 20));
-       // p[1].add(cb[0]);
-
         p[1].add(l[1]);
 
         cb[1] = new JComboBox(cargoDe);
@@ -121,18 +107,20 @@ public class Professor extends JFrame {
         add(p[1], gbc);
         
         
-        //Linha 2
-            tf[0] = new JTextField("Turma: ", 16);
-        
+        //Linha 2        
         p[2] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        p[2].add(l[3]);
-        p[2].add(tf[0]);
-        tf[0].setForeground(white);
+        
+        p[2].add(l[2]);
+        sp[2] = new JSpinner();
+        sp[2].setPreferredSize(new Dimension(50,20));
+        p[2].add(sp[2]);
         
         p[2].setBackground(white);
         gbc.gridx = 0;
         gbc.gridy = 4;
         add(p[2], gbc);
+        
+        
         
     }
 
@@ -159,7 +147,6 @@ public class Professor extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 JOptionPane.showMessageDialog(null, " Cadastrado Com Sucesso! ");
                 setVisible(false);
-                inserir();
                 MenuPrincipal mn = new MenuPrincipal();
             }
         });
@@ -175,26 +162,5 @@ public class Professor extends JFrame {
     }
     public void cadastro4(){
         cargo = cb[1].getSelectedItem().toString();
-    }
-    public void inserir(){
-        String sql1 = "INSERT INTO `funcionario` (`idFuncionario`, `nome`, `apelido`, `bi`, `sexo`, `dataNasc`, `NIB`, `nacionalidade`, `estadoCiv`) "
-                + "VALUES (?, ?, ?,?, ?, ?, ?, ?, ?)";
-        DadosPessoais d = new DadosPessoais();
-        try {
-            PreparedStatement ps = conexao.prepareStatement(sql1);
-            ps.setInt(1, 1112);
-            ps.setString(2, d.getDp().getNome());
-            ps.setString(3, d.getDp().getApelido());
-            ps.setString(4, d.getDp().getBi());
-            ps.setString(5, d.getDp().getSexo());
-            ps.setString(6, d.getDp().getData());
-            ps.setInt(7, d.getDp().getNib());
-            ps.setString(8, d.getDp().getNacionalidade());
-            ps.setString(9, d.getDp().getEstCivil());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }
