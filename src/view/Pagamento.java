@@ -4,7 +4,13 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import temp.*;
 
 public class Pagamento extends JFrame {
 
@@ -15,6 +21,9 @@ public class Pagamento extends JFrame {
     JTextField tf[]=new JTextField[5];
     
     JButton processar,proximo;
+    
+     DefaultTableModel model = new DefaultTableModel();
+     JTable table= new JTable();
      //Default
     Font Butoes_Font,label_Font,ComboBox_Font;
     Color blue,white,orange,gray;
@@ -58,9 +67,7 @@ public class Pagamento extends JFrame {
         gbc.gridy=1;
         add(img2,gbc);
         pagamento();
-        
-        butoes();
-        
+              
         getContentPane().setBackground(Color.WHITE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true); 
@@ -108,6 +115,26 @@ public class Pagamento extends JFrame {
         gbc.gridx=0;
         gbc.gridy++;
         add(p[i+1],gbc);}
+        
+        //JTable
+                butoes();
+        //Jtable
+        p[7]=new JPanel(new FlowLayout(FlowLayout.LEFT,50,5));
+        model.addColumn("Matricula");
+        model.addColumn("Nome");
+        model.addColumn("idade");
+        model.addColumn("Sexo");
+        criartabela();
+        table = new JTable(model);
+        table.setPreferredScrollableViewportSize(new Dimension(500,200));
+        p[7].add(new JScrollPane(table));
+
+
+        p[7].setBackground(white);
+        gbc.gridx=0;
+        gbc.gridy=9;
+        add(p[7],gbc);
+        
     }
    
     private void butoes() {
@@ -155,4 +182,25 @@ public class Pagamento extends JFrame {
         add(p[7],gbc);
     }
     
+    public void criartabela()  {
+        
+        try {
+            ClienteDAO dao =new ClienteDAO();
+            ArrayList<Cliente> a = new ArrayList<>();
+            a=(ArrayList<Cliente>) dao.todos();
+            String[] dados=new String[4];
+            for(int i=0;i<a.size();i++){
+                dados[0]=""+a.get(i).getMatricula();
+                dados[1]=a.get(i).getNome();
+                dados[2]=""+a.get(i).getIdade();
+                dados[3]=a.get(i).getSexo();
+                model.addRow(dados);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pagamento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Pagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }
 }
