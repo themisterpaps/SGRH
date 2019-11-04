@@ -1,6 +1,7 @@
 
 package view;
 
+import VO.PagamentoVO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,17 +54,17 @@ public class Pagamento extends JFrame {
         JLabel img=new JLabel("",new ImageIcon("src/images/d-2.jpg"),JLabel.CENTER);
         gbc.fill=GridBagConstraints.HORIZONTAL;
         gbc.gridwidth=2;
-        gbc.gridx=0;
+        gbc.gridx=1;
         gbc.gridy=0;
         add(img,gbc);
         
         //Imagem 2
         gbc.gridwidth=2;
         gbc.fill=GridBagConstraints.HORIZONTAL;
-        JLabel img2=new JLabel("",new ImageIcon("src/images/n.jpg"),JLabel.LEFT);
+        JLabel img2=new JLabel("",new ImageIcon("src/images/n.jpg"),JLabel.CENTER);
         
         gbc.gridwidth=0;
-        gbc.gridx=0;
+        gbc.gridx=1;
         gbc.gridy=1;
         add(img2,gbc);
         pagamento();
@@ -92,14 +93,14 @@ public class Pagamento extends JFrame {
             sp[i].setPreferredSize(new Dimension(180,18));
             }
         //Linha 1
-        p[1]=new JPanel(new FlowLayout(FlowLayout.LEFT,10,5));
+        p[1]=new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
 
         tf[0]=new JTextField("Número de BI",16);
         p[1].add(l[0]);
         p[1].add(tf[0]);
         
         p[1].setBackground(white);
-        gbc.gridx=0;
+        gbc.gridx=1;
         gbc.gridy=2;
         add(p[1],gbc);
     
@@ -107,7 +108,7 @@ public class Pagamento extends JFrame {
         int j=1;
        
         for(int i=1;i<=4;i++){
-        p[i+1]=new JPanel(new FlowLayout(FlowLayout.LEFT,10,5));
+        p[i+1]=new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
         p[i+1].add(l[i]);  
         p[i+1].add(sp[i]);
  
@@ -119,14 +120,18 @@ public class Pagamento extends JFrame {
         //JTable
                 butoes();
         //Jtable
-        p[7]=new JPanel(new FlowLayout(FlowLayout.LEFT,50,5));
-        model.addColumn("Matricula");
+        p[7]=new JPanel(new FlowLayout(FlowLayout.CENTER,50,5));
+
         model.addColumn("Nome");
-        model.addColumn("idade");
-        model.addColumn("Sexo");
+        model.addColumn("Horas Extra");
+        model.addColumn("Faltas");
+        model.addColumn("Bonus");
+        model.addColumn("Descontos");
+        model.addColumn("Salario Bruto");
+        model.addColumn("Salario Liquido");
         criartabela();
         table = new JTable(model);
-        table.setPreferredScrollableViewportSize(new Dimension(500,200));
+        table.setPreferredScrollableViewportSize(new Dimension(900,300));
         p[7].add(new JScrollPane(table));
 
 
@@ -156,7 +161,7 @@ public class Pagamento extends JFrame {
         p[6].setBackground(white);
         gbc.fill=GridBagConstraints.NONE;
         gbc.gridwidth=3;
-        gbc.gridx=0;
+        gbc.gridx=1;
         gbc.gridy=7;
         add(p[6],gbc);
         
@@ -177,7 +182,7 @@ public class Pagamento extends JFrame {
         p[7].add(processar);
         
         p[7].setBackground(white);
-        gbc.gridx=0;
+        gbc.gridx=1;
         gbc.gridy=8;
         add(p[7],gbc);
     }
@@ -185,21 +190,24 @@ public class Pagamento extends JFrame {
     public void criartabela()  {
         
         try {
-            ClienteDAO dao =new ClienteDAO();
-            ArrayList<Cliente> a = new ArrayList<>();
-            a=(ArrayList<Cliente>) dao.todos();
-            String[] dados=new String[4];
+            PagamentoDAO dao =new PagamentoDAO();
+            ArrayList<PagamentoVO> a = new ArrayList<>();
+            a=(ArrayList<PagamentoVO>) dao.todos();
+            String[] dados=new String[7];
             for(int i=0;i<a.size();i++){
-                dados[0]=""+a.get(i).getMatricula();
-                dados[1]=a.get(i).getNome();
-                dados[2]=""+a.get(i).getIdade();
-                dados[3]=a.get(i).getSexo();
+                dados[0]=""+a.get(i).getNome();
+                dados[1]=""+a.get(i).getHorasExtras();
+                dados[2]=""+a.get(i).getFaltas();
+                dados[3]=""+a.get(i).getBonus();
+                dados[4]=""+a.get(i).getDesconto();
+                dados[5]=""+a.get(i).getSalarioLiquido();
+                dados[6]=""+a.get(i).getSalariobruto();
                 model.addRow(dados);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Pagamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagamentoVO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Pagamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagamentoVO.class.getName()).log(Level.SEVERE, null, ex);
         }
      
     }
