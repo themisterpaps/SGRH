@@ -1,3 +1,6 @@
+/*
+ Esta classe é responsavel pela comunicação do Aplicativo com a base de dados MySQL;
+ */
 package control;
 
 import java.io.Serializable;
@@ -20,7 +23,7 @@ public class BDconexao implements Serializable {
     public BDconexao() {
         this.Host = "localhost"; // 127.0.0.1 = localhost
         this.porta = "3306";
-        this.BD = "SGRH";
+        this.BD = "RegistroMatricula";
         this.user = "root";
         this.password = "";
     }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package temp;
+import control.BDconexao;
 import VO.*;
 
 import java.sql.Connection;
