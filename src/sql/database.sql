@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 02-Nov-2019 às 13:58
+-- Generation Time: 05-Nov-2019 às 02:13
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -244,6 +244,33 @@ CREATE TABLE `funcionario` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `pagamento`
+--
+
+CREATE TABLE `pagamento` (
+  `id` int(11) NOT NULL,
+  `Nome` varchar(11) NOT NULL,
+  `horasExtras` int(11) NOT NULL,
+  `Faltas` int(11) NOT NULL,
+  `bonus` int(11) NOT NULL,
+  `desconto` int(11) NOT NULL,
+  `dataPagamento` date DEFAULT NULL,
+  `salarioBruto` decimal(11,0) NOT NULL,
+  `salarioLiquido` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `pagamento`
+--
+
+INSERT INTO `pagamento` (`id`, `Nome`, `horasExtras`, `Faltas`, `bonus`, `desconto`, `dataPagamento`, `salarioBruto`, `salarioLiquido`) VALUES
+(1, 'Henry', 6, 2, 2, 2, NULL, '0', '0'),
+(3, 'James', 1, 2, 3, 4, NULL, '1200', '1080'),
+(2, 'Mister', 2, 3, 3, 2, NULL, '0', '0');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `planosaude`
 --
 
@@ -339,6 +366,13 @@ ALTER TABLE `funcionario`
   ADD PRIMARY KEY (`idFuncionario`);
 
 --
+-- Indexes for table `pagamento`
+--
+ALTER TABLE `pagamento`
+  ADD PRIMARY KEY (`Nome`),
+  ADD UNIQUE KEY `key` (`id`);
+
+--
 -- Indexes for table `planosaude`
 --
 ALTER TABLE `planosaude`
@@ -371,6 +405,12 @@ ALTER TABLE `cargo`
 --
 ALTER TABLE `funcionario`
   MODIFY `idFuncionario` int(4) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pagamento`
+--
+ALTER TABLE `pagamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

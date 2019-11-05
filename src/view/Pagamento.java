@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import temp.*;
 
 public class Pagamento extends JFrame {
 
@@ -76,12 +75,12 @@ public class Pagamento extends JFrame {
     }
 
     private void pagamento() {
-        l[0] = new JLabel("Nome      ");
-        l[1] = new JLabel("Horas Extras       ");
-        l[2] = new JLabel("Numero deFaltas ");
-        l[3] = new JLabel("Bonificacão        ");
-        l[4] = new JLabel("Desconto            ");
-        l[5] = new JLabel("Nome Completo   ");
+        l[0] = new JLabel("Nome:                 ");
+        l[1] = new JLabel("Horas Extras:       ");
+        l[2] = new JLabel("Numero deFaltas: ");
+        l[3] = new JLabel("Bonificacão:        ");
+        l[4] = new JLabel("Desconto:            ");
+        l[5] = new JLabel("Nome Completo:   ");
           //Label Propriedade
         for(int i=0;i<=5;i++){
          l[i].setFont(label_Font);
@@ -132,7 +131,7 @@ public class Pagamento extends JFrame {
         model.addColumn("Salario Liquido");
         criartabela();
         table = new JTable(model);
-        table.setPreferredScrollableViewportSize(new Dimension(900,300));
+        table.setPreferredScrollableViewportSize(new Dimension(700,300));
         p[7].add(new JScrollPane(table));
 
 
@@ -190,14 +189,14 @@ public class Pagamento extends JFrame {
         add(p[6],gbc);
         
         p[7]=new JPanel(new FlowLayout(FlowLayout.LEFT,10,0));
-        processar=new JButton("Processar");
+        processar=new JButton("Finalizar");
         processar.setBackground(blue);
         processar.setForeground(white);
         processar.setPreferredSize(new Dimension(300,32));
         processar.setFont(new Font("Sans Serif",Font.BOLD,14));
         processar.addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
-                JOptionPane.showMessageDialog(null, "Foram Porcessados n Salarios");
+                JOptionPane.showMessageDialog(null, "Salarios Processados ");
                 setVisible(false);
                 MenuPrincipal mn=new MenuPrincipal();
                 }
