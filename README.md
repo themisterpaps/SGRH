@@ -21,7 +21,7 @@ Como referência foca-se, como ponto de partida num centro de explicação, tent
 - [Net Beans 8.0.2](https://www.netbeans.com/) (recomended);
 - [JDBC - Java Database Base Connector version 5.1.23]();
 ## Database Schema
-<img src="src\sql\database.sql" width="150px" alt="Database schema">
+<img src="src\sql\schema.png"  alt="Database schema">
 
 &nbsp;
 
