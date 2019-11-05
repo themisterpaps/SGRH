@@ -1,6 +1,7 @@
 
 package view;
 
+import DAO.PagamentoDAO;
 import VO.PagamentoVO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -75,7 +76,7 @@ public class Pagamento extends JFrame {
     }
 
     private void pagamento() {
-        l[0] = new JLabel("Numero de BI     ");
+        l[0] = new JLabel("Nome      ");
         l[1] = new JLabel("Horas Extras       ");
         l[2] = new JLabel("Numero deFaltas ");
         l[3] = new JLabel("Bonificacão        ");
@@ -95,7 +96,7 @@ public class Pagamento extends JFrame {
         //Linha 1
         p[1]=new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
 
-        tf[0]=new JTextField("Número de BI",16);
+        tf[0]=new JTextField("Nome",16);
         p[1].add(l[0]);
         p[1].add(tf[0]);
         
@@ -151,8 +152,31 @@ public class Pagamento extends JFrame {
         proximo.setFont(new Font("Sans Serif",Font.BOLD,14));
         proximo.addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
-               setVisible(false);
-               Pagamento pg= new Pagamento();
+                try {
+                    
+                    PagamentoVO pg=new PagamentoVO();
+                    pg.setNome(tf[0].getText());
+                    String a=""+sp[1].getValue();
+                    pg.setHorasExtras(Integer.parseInt(a));
+                    a=""+sp[2].getValue();
+                    pg.setFaltas(Integer.parseInt(a));
+                    a=""+sp[3].getValue();
+                    pg.setBonus(Integer.parseInt(a));
+                    a=""+sp[4].getValue();
+                    pg.setDesconto(Integer.parseInt(a));
+                    
+                    pg.setSalariobruto((float) (1200+0.1*pg.getBonus()));
+                    pg.setSalarioLiquido((float) (pg.getSalariobruto()*(1-0.1)));
+                    PagamentoDAO pgs=new PagamentoDAO();
+                    pgs.inserir(pg);
+                    setVisible(false);
+                    Pagamento ad=new Pagamento();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Pagamento.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Pagamento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
                 }
             });
   
