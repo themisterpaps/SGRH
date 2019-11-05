@@ -1,5 +1,5 @@
 <p align="center">
-<img src="img/sgrh--green.png" width="150px">
+<img src="img/sgrh--green.png" width="150px" alt="Database Schema">
 </p>
 
 # Sistema de Gestao de Rescursos Humanos
@@ -19,6 +19,12 @@ Como referência foca-se, como ponto de partida num centro de explicação, tent
 ## Requisitos
 - [Java developement Kit 8 update 191](https://WWW.JAVA.COM/) (or above);
 - [Net Beans 8.0.2](https://www.netbeans.com/) (recomended);
+- [JDBC - Java Database Base Connector version 5.1.23]();
+## Database Schema
+<img src="src\sql\database.sql" width="150px" alt="Database schema">
+
+&nbsp;
+
 ## Features
 - Controlo do efectivo da empresa (Número de Trabalhadores).
 - Cadastro de novos funcionários como demissão dos mesmos.
