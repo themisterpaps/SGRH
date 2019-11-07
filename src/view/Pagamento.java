@@ -53,7 +53,7 @@ public class Pagamento extends JFrame {
          //Image
         JLabel img=new JLabel("",new ImageIcon("src/images/d-2.jpg"),JLabel.CENTER);
         gbc.fill=GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth=2;
+       gbc.gridwidth=0;
         gbc.gridx=1;
         gbc.gridy=0;
         add(img,gbc);
@@ -120,7 +120,7 @@ public class Pagamento extends JFrame {
         //JTable
                 butoes();
         //Jtable
-        p[7]=new JPanel(new FlowLayout(FlowLayout.CENTER,50,5));
+        p[7]=new JPanel(new FlowLayout(FlowLayout.CENTER,700,100));
 
         model.addColumn("Nome");
         model.addColumn("Horas Extra");
@@ -131,12 +131,12 @@ public class Pagamento extends JFrame {
         model.addColumn("Salario Liquido");
         criartabela();
         table = new JTable(model);
-        table.setPreferredScrollableViewportSize(new Dimension(700,300));
+        table.setPreferredScrollableViewportSize(new Dimension(700,200));
         p[7].add(new JScrollPane(table));
 
 
         p[7].setBackground(white);
-        gbc.gridx=0;
+        gbc.gridx=1;
         gbc.gridy=9;
         add(p[7],gbc);
         
@@ -144,7 +144,7 @@ public class Pagamento extends JFrame {
    
     private void butoes() {
         //Butoes
-        p[6]=new JPanel(new FlowLayout(FlowLayout.LEFT,50,5));
+        p[6]=new JPanel(new FlowLayout(FlowLayout.LEFT,300,0));
         proximo=new JButton("Proximo");
         proximo.setBackground(orange);
         proximo.setPreferredSize(new Dimension(300,32));
@@ -188,7 +188,7 @@ public class Pagamento extends JFrame {
         gbc.gridy=7;
         add(p[6],gbc);
         
-        p[7]=new JPanel(new FlowLayout(FlowLayout.LEFT,10,0));
+        p[7]=new JPanel(new FlowLayout(FlowLayout.LEFT,300,10));
         processar=new JButton("Finalizar");
         processar.setBackground(blue);
         processar.setForeground(white);
