@@ -1,14 +1,14 @@
-package DAO;
-public class Cliente {
+package VO;
+public class ClienteVO {
 
     private int matricula, idade;
     private String nome;
     private char sexo;
 
-    public Cliente() {
+    public ClienteVO() {
     }
 
-    public Cliente(int matricula, String nome, int idade, char sexo) {
+    public ClienteVO(int matricula, String nome, int idade, char sexo) {
         this.matricula = matricula;
         this.nome = nome;
         this.idade = idade;

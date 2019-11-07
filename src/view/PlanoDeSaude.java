@@ -1,16 +1,25 @@
 package view;
 
+import DAO.FormacaoDAO;
+import DAO.PlanoDeSaudeDAO;
 import control.Validacoes;
-import VO.DadosPessais1;
+import VO.DadosPessoaisVO;
+import VO.FormacaoVO;
+import VO.PlanoDeSaudeVO;
 import java.awt.*;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 public class PlanoDeSaude extends JFrame{
     private String dataI, dataF, anoI, anoF,cursoc, niveln;
     private int nrAgrg;
+    private PlanoDeSaudeVO pds;
+    private FormacaoVO f;
     JButton b[]=new JButton[5];
     JPanel p[]= new JPanel[8];
     JLabel l[]=new JLabel[10];
@@ -227,28 +236,38 @@ public class PlanoDeSaude extends JFrame{
         add(p[5],gbc);
     }
     public void cadastro2(){
-        //Validacoes
-        Validacoes v = new Validacoes();
-        //Data Inicio
-        dataI = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
-        if(!v.validarData(dataI, 1900, 2019, "Data Inicio")){return;}
-        //Data Fim
-        dataF = new SimpleDateFormat("dd/MM/yyyy").format(sp[1].getValue());
-        if(!v.validarData(dataF, 2019, 2050, "Data Fim")){return;}
-        //Agregado Familiar
-        if(!v.validarInt(Integer.parseInt(sp[2].getValue().toString()), 0, 50, "Agregado Familiar")){return;} else{nrAgrg = Integer.parseInt(sp[2].getValue().toString());}
-        //Curso
-        cursoc = cb[0].getSelectedItem().toString();
-        //Nivel Academico
-        niveln = cb[1].getSelectedItem().toString();
-        //Ano Inicio
-        anoI = new SimpleDateFormat("dd/MM/yyyy").format(sp[3].getValue());
-        if(!v.validarData(anoI, 2000, 2019, "Ano Inicio")){return;}
-        //Ano Fim/Previsao
-        anoF = new SimpleDateFormat("dd/MM/yyyy").format(sp[4].getValue());
-        if(!v.validarData(anoF, 2019, 2050, "Ano Fim/Previsao")){return;}
-        
-        setVisible(false);
-        Experiencia ex=new Experiencia();
+        try {
+            //Validacoes
+            Validacoes v = new Validacoes();
+            //Data Inicio
+            dataI = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
+            if(!v.validarData(dataI, 1900, 2019, "Data Inicio")){return;}
+            //Data Fim
+            dataF = new SimpleDateFormat("dd/MM/yyyy").format(sp[1].getValue());
+            if(!v.validarData(dataF, 2019, 2050, "Data Fim")){return;}
+            //Agregado Familiar
+            if(!v.validarInt(Integer.parseInt(sp[2].getValue().toString()), 0, 50, "Agregado Familiar")){return;} else{nrAgrg = Integer.parseInt(sp[2].getValue().toString());}
+            //Curso
+            cursoc = cb[0].getSelectedItem().toString();
+            //Nivel Academico
+            niveln = cb[1].getSelectedItem().toString();
+            //Ano Inicio
+            anoI = new SimpleDateFormat("dd/MM/yyyy").format(sp[3].getValue());
+            if(!v.validarData(anoI, 2000, 2019, "Ano Inicio")){return;}
+            //Ano Fim/Previsao
+            anoF = new SimpleDateFormat("dd/MM/yyyy").format(sp[4].getValue());
+            if(!v.validarData(anoF, 2019, 2050, "Ano Fim/Previsao")){return;}
+            
+            pds = new PlanoDeSaudeVO(dataI, dataF, nrAgrg);
+            PlanoDeSaudeDAO daopds = new PlanoDeSaudeDAO();
+            daopds.inserir(pds);
+            f = new FormacaoVO(cursoc, niveln, anoI, anoF);
+            FormacaoDAO daof = new FormacaoDAO();
+            daof.inserir(f);
+            setVisible(false);
+            Experiencia ex=new Experiencia();
+        } catch (ParseException ex) {
+            Logger.getLogger(PlanoDeSaude.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

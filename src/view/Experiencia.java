@@ -1,18 +1,27 @@
 package view;
 
+import DAO.ContractoDAO;
+import DAO.ExperienciaDAO;
+import VO.ContractoVO;
+import VO.ExperienciaVO;
 import control.Validacoes;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class Experiencia extends JFrame {
 
     private String empresa, anoForm, cargo, areaF, dataIE, dataFE, dataIC, dataFC;
     char tipo, crit;
+    private ExperienciaVO exp;
+    private ContractoVO c;
 
     JButton b[] = new JButton[4];
     JPanel p[] = new JPanel[8];
@@ -318,45 +327,60 @@ public class Experiencia extends JFrame {
     }
 
     public void cadastro3() {
-        Boolean isEmpty=false;
-        //Check if is Empty
-        if(tf[0].getText().equalsIgnoreCase("Nome da Empresa")){isEmpty=true;}//Nome da Empresa
-        if(tf[1].getText().equalsIgnoreCase("Cargo")){isEmpty=true;}//Cargo
-        if(isEmpty){
-            JOptionPane.showMessageDialog(null, "Por favor! Preencha todos campos de dado.", "Erro!", JOptionPane.ERROR_MESSAGE);
-            return;
+        try {
+            Boolean isEmpty=false;
+            //Check if is Empty
+            if(tf[0].getText().equalsIgnoreCase("Nome da Empresa")){isEmpty=true;}//Nome da Empresa
+            if(tf[1].getText().equalsIgnoreCase("Cargo")){isEmpty=true;}//Cargo
+            if(isEmpty){
+                JOptionPane.showMessageDialog(null, "Por favor! Preencha todos campos de dado.", "Erro!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            //Validacoes
+            Validacoes v = new Validacoes();
+            if(!v.validarSemNr(tf[0].getText(), 3, 40, "Nome da Empresa")){return;} else{empresa=tf[0].getText();}//Nome da Empresa
+            //Ano de Formacao
+            anoForm = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
+            if(!v.validarData(anoForm, 2019, 2050, "Ano de Formacao")){return;}
+            if(!v.validarSemNr(tf[1].getText(), 3, 40, "Cargo")){return;} else{cargo=tf[1].getText();}//Cargo
+            areaF = cb[0].getSelectedItem().toString();//Area de Formacao
+            //Data Inicio Experiencia
+            dataIE = new SimpleDateFormat("dd/MM/yyyy").format(sp[1].getValue());
+            if(!v.validarData(dataIE, 2000, 2019, "Data Inicio de Experiencia")){return;}
+            //Data Fim Experiencia
+            dataFE = new SimpleDateFormat("dd/MM/yyyy").format(sp[2].getValue());
+            if(!v.validarData(dataFE, 2019, 2050, "Data Fim de Experiencia")){return;}
+            //Data Inicio
+            dataIC = new SimpleDateFormat("dd/MM/yyyy").format(sp[3].getValue());
+            if(!v.validarData(dataIC, 2000, 2019, "Data Inicio do Contracto")){return;}
+            //Data Fim
+            dataFC = new SimpleDateFormat("dd/MM/yyyy").format(sp[4].getValue());
+            if(!v.validarData(dataFC, 2019, 2050, "Data Fim do Contracto")){return;}
+            //Tipo
+            if (rb[0].isSelected()) {tipo = 'A';}
+            else if (rb[1].isSelected()) {tipo = 'B';}
+            else if (rb[2].isSelected()) {tipo = 'C';}
+            else if (rb[3].isSelected()) {tipo = 'D';}
+            //Funcao
+            if (rb[4].isSelected()) {crit = 'A';}
+            else if (rb[5].isSelected()) {crit = 'P';}
+            
+            exp = new ExperienciaVO(empresa, anoForm, cargo, areaF, dataIE, dataFE);
+            ExperienciaDAO daoexp = new ExperienciaDAO();
+            daoexp.inserir(exp);
+            c = new ContractoVO(dataIC, dataFC, tipo);
+            ContractoDAO daoc = new ContractoDAO();
+            daoc.inserir(c);
+            setVisible(false);
+            if(crit == 'A'){
+                Admin m=new Admin();
+            }
+            else{
+                Professor mn=new Professor();
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Experiencia.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //Validacoes
-        Validacoes v = new Validacoes();
-        if(!v.validarSemNr(tf[0].getText(), 3, 40, "Nome da Empresa")){return;} else{empresa=tf[0].getText();}//Nome da Empresa
-        //Ano de Formacao
-        anoForm = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
-        if(!v.validarData(anoForm, 2019, 2050, "Ano de Formacao")){return;}
-        if(!v.validarSemNr(tf[1].getText(), 3, 40, "Cargo")){return;} else{cargo=tf[1].getText();}//Cargo
-        areaF = cb[0].getSelectedItem().toString();//Area de Formacao
-        //Data Inicio Experiencia
-        dataIE = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
-        if(!v.validarData(dataIE, 2000, 2019, "Data Inicio de Experiencia")){return;}
-        //Data Fim Experiencia
-        dataFE = new SimpleDateFormat("dd/MM/yyyy").format(sp[1].getValue());
-        if(!v.validarData(dataFE, 2019, 2050, "Data Fim de Experiencia")){return;}
-        //Data Inicio
-        dataIC = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
-        if(!v.validarData(dataIC, 2000, 2019, "Data Inicio do Contracto")){return;}
-        //Data Fim
-        dataFC = new SimpleDateFormat("dd/MM/yyyy").format(sp[1].getValue());
-        if(!v.validarData(dataFC, 2019, 2050, "Data Fim do Contracto")){return;}
-        //Tipo
-        if (rb[0].isSelected()) {tipo = 'A';}
-        else if (rb[1].isSelected()) {tipo = 'B';}
-        else if (rb[2].isSelected()) {tipo = 'C';}
-        else if (rb[3].isSelected()) {tipo = 'D';}
-        //Funcao
-        if (rb[4].isSelected()) {crit = 'A';}
-        else if (rb[5].isSelected()) {crit = 'P';}
-        
-        setVisible(false);
-        Admin a = new Admin();
     }
 }

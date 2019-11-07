@@ -29,9 +29,14 @@ public class BDconexao implements Serializable {
     }
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
-        BDconexao bDconexao = new BDconexao();
-        return DriverManager.getConnection("jdbc:mysql://" + bDconexao.Host + ":" + bDconexao.porta + "/" + bDconexao.BD + "?user="+bDconexao.user+"&password="+bDconexao.password+"&noAccessToProcedureBodies=true");
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            BDconexao bDconexao = new BDconexao();
+            return DriverManager.getConnection("jdbc:mysql://" + bDconexao.Host + ":" + bDconexao.porta + "/" + bDconexao.BD + "?user="+bDconexao.user+"&password="+bDconexao.password+"&noAccessToProcedureBodies=true");
+        }catch (SQLException e){
+            System.out.println(e);
+            return null;
+        }
     }
 
     public String getBD() {

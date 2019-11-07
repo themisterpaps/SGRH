@@ -5,9 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import DAO.ModuloConexao.*;
+import control.BDconexao;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
-public class Logn extends JFrame {
+public class Login extends JFrame {
 
     Connection conexao = null;
     PreparedStatement pst = null;
@@ -23,7 +25,7 @@ public class Logn extends JFrame {
 
     Dimension d1;
 
-    public Logn() {
+    public Login() {
         setTitle("LOGN IN PAGE");
         setLocation(250, 100);
         setSize(900, 700);
@@ -37,7 +39,6 @@ public class Logn extends JFrame {
         white = new Color(247, 247, 247);
         gray = new Color(149, 156, 147);
         orange = new Color(245, 139, 31);
-        conexao = DAO.ModuloConexao.conector();
 
         //Layout Sttings
         setLayout(new GridBagLayout());
@@ -52,15 +53,14 @@ public class Logn extends JFrame {
         gbc.gridy = 0;
 
         add(img, gbc);
-        //
-        logn();
+        login();
 
         getContentPane().setBackground(Color.WHITE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
 
-    public void logn() {
+    public void login() {
 
         l[0] = new JLabel("Usuário:");
         l[0].setFont(label_Font);
@@ -71,17 +71,33 @@ public class Logn extends JFrame {
         p[1] = new JPanel(new FlowLayout(FlowLayout.LEFT));
         p[1].add(l[0]);
         p[1].add(tf[0]);
+        tf[0].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tf[0].getText().equalsIgnoreCase("Usuário")){
+                    tf[0].setText("");
+                    tf[0].setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(tf[0].getText().equals("")){
+                    tf[0].setText("Usuário");
+                    tf[0].setForeground(Color.GRAY);
+                }
+            }
+        });
         p[1].setBackground(white);
         p[1].setPreferredSize(d1);
         gbc.gridx = 0;
         gbc.gridy = 1;
         add(p[1], gbc);
 
-        l[1] = new JLabel("Senha:   ");
+        l[1] = new JLabel("Senha:  ");
         l[1].setFont(label_Font);
         l[1].setForeground(new Color(44, 62, 80));
         ps = new JPasswordField("", 26);
-        ps.setForeground(new Color(149, 156, 147));
+        ps.setForeground(Color.black);
 
         p[2] = new JPanel(new FlowLayout(FlowLayout.LEFT));
         p[2].setPreferredSize(d1);
@@ -100,7 +116,6 @@ public class Logn extends JFrame {
         bt.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
-                //setVisible(false);
                 logar();
             }
         });
@@ -109,27 +124,26 @@ public class Logn extends JFrame {
         p[3].setBackground(Color.WHITE);
         gbc.gridy = 3;
         add(p[3], gbc);
-
     }
 
     public void logar() {
-        String sql = "select * from administrador where username=? and senha =?";
+        String sql = "select * from admin where username=? and password =?";
         try {
+            conexao = control.BDconexao.getConnection();
             pst = conexao.prepareStatement(sql);
             pst.setString(1, tf[0].getText());
             pst.setString(2, ps.getText());
             rs = pst.executeQuery();
             if (rs.next()) {
                 MenuPrincipal m = new MenuPrincipal();
-                m.setVisible(true);
+                setVisible(false);
                 this.dispose();
                 conexao.close();
             } else {
                 JOptionPane.showMessageDialog(null, "usuário e/ou senha inválido(s)","Erro", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (HeadlessException | SQLException e) {
+        } catch (HeadlessException | SQLException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }
-
 }

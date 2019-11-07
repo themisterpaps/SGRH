@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.*;
@@ -80,7 +79,7 @@ public class MenuPrincipal extends JFrame{
          btn[3].addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
                 setVisible(false);
-                Logn lg=new Logn();
+                Login lg=new Login();
                 }
             });
         for(int i=0;i<4;i++){
@@ -90,15 +89,11 @@ public class MenuPrincipal extends JFrame{
             btn[i].setForeground(blue);
             p[1].add(btn[i]);
             }
-
-        //.addActionListener(this);
-       
+        
         p[1].setBackground(Color.WHITE);
         gbc.gridx=0;
         gbc.gridy=1;
         add(p[1],gbc);
         
     }
-    
-    
 }

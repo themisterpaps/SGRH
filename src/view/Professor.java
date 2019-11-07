@@ -1,5 +1,7 @@
 package view;
 
+import DAO.ProfessorDAO;
+import VO.ProfessorVO;
 import java.awt.*;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,9 @@ import javax.swing.*;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class Professor extends JFrame {
-    private String cargo;
+    private String disciplina;
+    private int totalTurma;
+    private ProfessorVO pr;
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -119,9 +123,6 @@ public class Professor extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 4;
         add(p[2], gbc);
-        
-        
-        
     }
 
     private void butoes() {
@@ -145,9 +146,7 @@ public class Professor extends JFrame {
         proximo.setFont(new Font("Sans Serif", Font.BOLD, 14));
         proximo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                JOptionPane.showMessageDialog(null, " Cadastrado Com Sucesso! ");
-                setVisible(false);
-                MenuPrincipal mn = new MenuPrincipal();
+                cadastro4();
             }
         });
         p[6].add(anterior);
@@ -161,6 +160,14 @@ public class Professor extends JFrame {
         add(p[6], gbc);
     }
     public void cadastro4(){
-        cargo = cb[1].getSelectedItem().toString();
+        disciplina = cb[1].getSelectedItem().toString();
+        totalTurma = Integer.parseInt(sp[2].getValue().toString());
+        
+        pr = new ProfessorVO(disciplina, totalTurma);
+        ProfessorDAO daopr = new ProfessorDAO();
+        daopr.inserir(pr);
+        setVisible(false);
+        MenuPrincipal mn = new MenuPrincipal();
+        JOptionPane.showMessageDialog(null, " Cadastrado Com Sucesso! ");
     }
 }

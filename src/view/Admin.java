@@ -1,5 +1,7 @@
 package view;
 
+import DAO.AdminDAO;
+import VO.AdminVO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +16,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 public class Admin extends JFrame {
-    private String cargo;
+    private String cargo, username, password;
+    private AdminVO ad;
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -32,7 +35,6 @@ public class Admin extends JFrame {
     GridBagConstraints gbc = new GridBagConstraints();
 
     public Admin() {
-        conexao = DAO.ModuloConexao.conector();
         setTitle("Cadastro || S.G.R.H");
         setLocation(250, 100);
         setSize(900, 700);
@@ -130,12 +132,27 @@ public class Admin extends JFrame {
         add(img2, gbc);
         
         //Linha 2
-            tf[0] = new JTextField("Username: ", 16);
+            tf[0] = new JTextField("Username", 16);
         
         p[2] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         p[2].add(l[3]);
         p[2].add(tf[0]);
-        tf[0].setForeground(white);
+        tf[0].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tf[0].getText().equalsIgnoreCase("Username")){
+                    tf[0].setText("");
+                    tf[0].setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(tf[0].getText().equals("")){
+                    tf[0].setText("Username");
+                    tf[0].setForeground(Color.GRAY);
+                }
+            }
+        });
         
         p[2].setBackground(white);
         gbc.gridx = 0;
@@ -143,11 +160,26 @@ public class Admin extends JFrame {
         add(p[2], gbc);
         
           //Linha 3
-        tf[1] = new JTextField("Password: ", 16);
+        tf[1] = new JTextField("Password", 16);
         p[3] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         p[3].add(l[4]);
         p[3].add(tf[1]);
-        tf[1].setForeground(white);
+        tf[1].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tf[1].getText().equalsIgnoreCase("Password")){
+                    tf[1].setText("");
+                    tf[1].setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(tf[1].getText().equals("")){
+                    tf[1].setText("Password");
+                    tf[1].setForeground(Color.GRAY);
+                }
+            }
+        });
         
         p[3].setBackground(white);
         gbc.gridx = 0;
@@ -176,10 +208,7 @@ public class Admin extends JFrame {
         proximo.setFont(new Font("Sans Serif", Font.BOLD, 14));
         proximo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                JOptionPane.showMessageDialog(null, " Cadastrado Com Sucesso! ");
-                setVisible(false);
-                inserir();
-                MenuPrincipal mn = new MenuPrincipal();
+                cadastro4();
             }
         });
         p[6].add(anterior);
@@ -194,26 +223,13 @@ public class Admin extends JFrame {
     }
     public void cadastro4(){
         cargo = cb[1].getSelectedItem().toString();
-    }
-    public void inserir(){
-        String sql1 = "INSERT INTO `funcionario` (`idFuncionario`, `nome`, `apelido`, `bi`, `sexo`, `dataNasc`, `NIB`, `nacionalidade`, `estadoCiv`) "
-                + "VALUES (?, ?, ?,?, ?, ?, ?, ?, ?)";
-        DadosPessoais d = new DadosPessoais();
-        try {
-            PreparedStatement ps = conexao.prepareStatement(sql1);
-            ps.setInt(1, 1112);
-            ps.setString(2, d.getDp().getNome());
-            ps.setString(3, d.getDp().getApelido());
-            ps.setString(4, d.getDp().getBi());
-            ps.setString(5, d.getDp().getSexo());
-            ps.setString(6, d.getDp().getData());
-            ps.setInt(7, d.getDp().getNib());
-            ps.setString(8, d.getDp().getNacionalidade());
-            ps.setString(9, d.getDp().getEstCivil());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        username = tf[0].getText();
+        password = tf[1].getText();
+        ad = new AdminVO(cargo, username, password);
+        AdminDAO daoad = new AdminDAO();
+        daoad.inserir(ad);
+        setVisible(false);
+        MenuPrincipal mn = new MenuPrincipal();
+        JOptionPane.showMessageDialog(null, " Cadastrado Com Sucesso! ");
     }
 }

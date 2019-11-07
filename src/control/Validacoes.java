@@ -30,7 +30,7 @@ public class Validacoes {
                 return false;
             }
             if(b<x || b>y){
-                JOptionPane.showMessageDialog(null, "O seu "+word+" deve ter um comprimento maior que "+x+" e menor que "+y, "Erro!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "O seu "+word+" deve ter um comprimento maior que "+x+" e menor que "+y,"Erro!", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }catch(IndexOutOfBoundsException ie){System.err.print(ie.getMessage());}
@@ -106,7 +106,7 @@ public class Validacoes {
         mm=Byte.parseByte(str.nextToken());
         yyyy=Integer.parseInt(str.nextToken());
         if(yyyy<anoMin || yyyy>anoMax){
-            JOptionPane.showMessageDialog(null, word+" nao"+yyyy+" deve ser maior que "+anoMax+" ou menor que "+anoMin, "Erro!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, word+" deve ser maior que "+anoMin+" e menor que "+anoMax, "Erro!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -115,7 +115,7 @@ public class Validacoes {
         byte c=0;
         try{
             if(c<x || c>y){
-                JOptionPane.showMessageDialog(null, "O valor de "+word+" deve ser maior que "+x+" ou menor que "+y, "Erro!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "O valor de "+word+" deve ser maior que "+x+" e menor que "+y, "Erro!", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }catch(NumberFormatException nfe){System.err.print(nfe.getMessage());}

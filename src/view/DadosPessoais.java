@@ -1,18 +1,22 @@
 package view;
+import DAO.DadosPessoaisDAO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 import control.Validacoes;
-import VO.DadosPessais1;
+import VO.DadosPessoaisVO;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DadosPessoais extends JFrame {
     private String nome, apelido,nacionalidade, bi, estCivil, data, sexo;
     private int nib, nuit;
-    private  DadosPessais1 dp;
+    private  DadosPessoaisVO dp;
     JButton b[] = new JButton[4];
     
     JPanel p[] = new JPanel[8];
@@ -334,118 +338,43 @@ public class DadosPessoais extends JFrame {
         gbc.gridy = 7;
         add(p[6], gbc);
     }
-    public void cadastro(){
-        Boolean isEmpty=false;
-        
-        //Check if is Empty
-        if(tf[0].getText().equalsIgnoreCase("Nome")){isEmpty=true;}//username
-        if(tf[1].getText().equalsIgnoreCase("Apelido")){isEmpty=true;}//apelido
-        if(tf[2].getText().equalsIgnoreCase("Número de Bilhete de Identidade")){isEmpty=true;}//BI
-        if(tf[3].getText().equalsIgnoreCase("NIB")){isEmpty=true;}//NIB
-        if(cb[0].getSelectedItem().equals("Seleccione uma opção")){isEmpty=true;}//Nacionalidade
-        if(tf[4].getText().equalsIgnoreCase("NUIT")){isEmpty=true;}//NUIT
-        if(isEmpty){
-            JOptionPane.showMessageDialog(null, "Por favor! Preencha todos campos de dado.", "Erro!", JOptionPane.ERROR_MESSAGE);
-            return;
+    public void cadastro() {
+        try {
+            Boolean isEmpty=false;
+            
+            //Check if is Empty
+            if(tf[0].getText().equalsIgnoreCase("Nome")){isEmpty=true;}//username
+            if(tf[1].getText().equalsIgnoreCase("Apelido")){isEmpty=true;}//apelido
+            if(tf[2].getText().equalsIgnoreCase("Número de Bilhete de Identidade")){isEmpty=true;}//BI
+            if(tf[3].getText().equalsIgnoreCase("NIB")){isEmpty=true;}//NIB
+            if(cb[0].getSelectedItem().equals("Seleccione uma opção")){isEmpty=true;}//Nacionalidade
+            if(tf[4].getText().equalsIgnoreCase("NUIT")){isEmpty=true;}//NUIT
+            if(isEmpty){
+                JOptionPane.showMessageDialog(null, "Por favor! Preencha todos campos de dado.", "Erro!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            //Validacoes
+            Validacoes v = new Validacoes();
+            if(!v.validarNome(tf[0].getText(), 3, 40, "Nome de usuário")){return;} else{nome=tf[0].getText();}//username
+            if(!v.validarNome(tf[1].getText(), 3, 40, "Apelido")){return;} else{apelido=tf[1].getText();}//apelido
+            if(!v.validarBI(tf[2].getText())){return;} else{bi=tf[2].getText();}//BI
+            if(rb[0].isSelected()) sexo = "M"; else if (rb[0].isSelected()) sexo =  "F";//Sexo
+            //Data
+            data = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
+            if(!v.validarData(data, 1900, 2001, "Data de nascimento")){return;}
+            if(!v.validarIntLength(tf[3].getText(), 5, "NIB")){return;} else{nib=Integer.parseInt(tf[3].getText());}//NIB
+            nacionalidade = cb[0].getSelectedItem().toString();//Nacionalidade
+            if(!v.validarIntLength(tf[4].getText(), 9, "NUIT")){return;} else{nuit=Integer.parseInt(tf[4].getText());}//NUIT
+            if (rb[3].isSelected()) estCivil = "Solteiro"; else if(rb[4].isSelected())estCivil = "Casado";//Estado civil
+            
+            dp = new DadosPessoaisVO(nome,apelido,nacionalidade,bi,estCivil, data, sexo, nib, nuit);
+            DadosPessoaisDAO dao = new DadosPessoaisDAO();
+            dao.inserir(dp);
+            setVisible(false);
+            PlanoDeSaude pn = new PlanoDeSaude();
+        } catch (ParseException ex) {
+            Logger.getLogger(DadosPessoais.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //Validacoes
-        Validacoes v = new Validacoes();
-        if(!v.validarNome(tf[0].getText(), 3, 40, "Nome de usuário")){return;} else{nome=tf[0].getText();}//username
-        if(!v.validarNome(tf[1].getText(), 3, 40, "Apelido")){return;} else{apelido=tf[1].getText();}//apelido
-        if(!v.validarBI(tf[2].getText())){return;} else{bi=tf[2].getText();}//BI
-        if(rb[0].isSelected()) sexo = "M"; else if (rb[0].isSelected()) sexo =  "F";//Sexo
-        //Data
-        data = new SimpleDateFormat("dd/MM/yyyy").format(sp[0].getValue());
-        if(!v.validarData(data, 1900, 2001, "Data de nascimento")){return;}
-        if(!v.validarIntLength(tf[3].getText(), 5, "NIB")){return;} else{nib=Integer.parseInt(tf[3].getText());}//NIB
-        nacionalidade = cb[0].getSelectedItem().toString();//Nacionalidade
-        if(!v.validarIntLength(tf[4].getText(), 9, "NUIT")){return;} else{nuit=Integer.parseInt(tf[4].getText());}//NUIT
-        if (rb[3].isSelected()) estCivil = "Solteiro"; else if(rb[4].isSelected())estCivil = "Casado";//Estado civil
-        
-        dp = new DadosPessais1(nome,apelido,nacionalidade,bi,estCivil, data, sexo, nib, nuit);
-        setVisible(false);
-        PlanoDeSaude pn = new PlanoDeSaude();
     }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-    
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getApelido() {
-        return apelido;
-    }
-
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
-    }
-
-    public String getNacionalidade() {
-        return nacionalidade;
-    }
-
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
-    public String getBi() {
-        return bi;
-    }
-
-    public void setBi(String bi) {
-        this.bi = bi;
-    }
-
-    public String getEstCivil() {
-        return estCivil;
-    }
-
-    public void setEstCivil(String estCivil) {
-        this.estCivil = estCivil;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-    
-    public DadosPessais1 getDp() {
-        return dp;
-    }
-
-    public void setDp(DadosPessais1 dp) {
-        this.dp = dp;
-    }
-
-    public int getNib() {
-        return nib;
-    }
-
-    public void setNib(int nib) {
-        this.nib = nib;
-    }
-
-    public int getNuit() {
-        return nuit;
-    }
-
-    public void setNuit(int nuit) {
-        this.nuit = nuit;
-    }
-
 }

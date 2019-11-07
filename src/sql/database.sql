@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Nov-2019 às 02:13
--- Versão do servidor: 10.1.38-MariaDB
--- versão do PHP: 7.3.2
+-- Generation Time: Nov 06, 2019 at 08:35 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -108,66 +108,27 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `administrador`
+-- Table structure for table `admin`
 --
 
-CREATE TABLE `administrador` (
+CREATE TABLE `admin` (
   `idFuncionario` int(11) NOT NULL,
-  `idDept` int(4) NOT NULL,
-  `idCargo` int(11) NOT NULL,
-  `totalAdmin` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `cargo` varchar(45) NOT NULL,
+  `username` varchar(11) NOT NULL,
+  `password` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Acionadores `administrador`
+-- Dumping data for table `admin`
 --
-DELIMITER $$
-CREATE TRIGGER `AFTER_Delete_administrador` AFTER DELETE ON `administrador` FOR EACH ROW BEGIN
-  update departamento d
-  set totalTrab
-  = totalTrab-1
-    where d.idDept=old.idDept;
 
-update administrador 
-    set totalAdmin= totalAdmin-1;
-
-update Cargo C
-set totalTrab
-= totalTrab+1
-    where C.idCargo=old.idCargo;
-
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `AFTER_update_administrador` AFTER UPDATE ON `administrador` FOR EACH ROW BEGIN
-  update departamento d
-  set totalTrab
-  = totalTrab-1
-    where d.idDept=old.idDept;
-
-update departamento d
-set totalTrab
-= totalTrab+1
-    where d.idDept=NEW.idDept;
-
-update Cargo 
-    set totalTrab= totalTrab+1
-    where idCargo=NEW.idCargo;
-
-
-update Cargo 
-    set totalTrab= totalTrab-1
-    where idCargo=old.idCargo;
-
-END
-$$
-DELIMITER ;
+INSERT INTO `admin` (`idFuncionario`, `cargo`, `username`, `password`) VALUES
+(10, 'Tecnico', 'actq', 'actq');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cargo`
+-- Table structure for table `cargo`
 --
 
 CREATE TABLE `cargo` (
@@ -180,7 +141,7 @@ CREATE TABLE `cargo` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contracto`
+-- Table structure for table `contracto`
 --
 
 CREATE TABLE `contracto` (
@@ -190,37 +151,61 @@ CREATE TABLE `contracto` (
   `tipo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `contracto`
+--
+
+INSERT INTO `contracto` (`idFuncionario`, `dataInicio`, `dataFim`, `tipo`) VALUES
+(10, '2019-11-06', '2025-11-06', 'C');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `experiencia`
+-- Table structure for table `experiencia`
 --
 
 CREATE TABLE `experiencia` (
   `idFuncionario` int(4) NOT NULL,
-  `anos` int(11) DEFAULT NULL,
-  `experiencia` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
+  `nomeEmpresa` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `anoExperiencia` date DEFAULT NULL,
+  `cargo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `areaFormacao` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `dataInicio` date NOT NULL,
+  `dataFim` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `experiencia`
+--
+
+INSERT INTO `experiencia` (`idFuncionario`, `nomeEmpresa`, `anoExperiencia`, `cargo`, `areaFormacao`, `dataInicio`, `dataFim`) VALUES
+(10, 'Tactical Programmer Studios', '2019-11-06', 'Programador', 'Engenharia', '2018-11-06', '2022-11-06');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `formacao`
+-- Table structure for table `formacao`
 --
 
 CREATE TABLE `formacao` (
   `idFuncionario` int(11) NOT NULL,
-  `ano` year(4) DEFAULT NULL,
-  `formacao` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dataInicio` date NOT NULL,
   `dataFIm` date NOT NULL,
+  `nivel` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `nomeFormacao` varchar(45) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `formacao`
+--
+
+INSERT INTO `formacao` (`idFuncionario`, `dataInicio`, `dataFIm`, `nivel`, `nomeFormacao`) VALUES
+(10, '2018-11-06', '2022-11-06', 'Superior', 'Engenharia Informatica');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `funcionario`
+-- Table structure for table `funcionario`
 --
 
 CREATE TABLE `funcionario` (
@@ -232,19 +217,20 @@ CREATE TABLE `funcionario` (
   `dataNasc` date NOT NULL,
   `NIB` int(35) NOT NULL,
   `nacionalidade` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `estadoCiv` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `bairro` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `casa` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `rua` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `tel1` int(11) NOT NULL,
-  `tel2` int(11) DEFAULT NULL,
-  `tel3` int(11) DEFAULT NULL
+  `estadoCiv` varchar(45) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `funcionario`
+--
+
+INSERT INTO `funcionario` (`idFuncionario`, `nome`, `apelido`, `bi`, `sexo`, `dataNasc`, `NIB`, `nacionalidade`, `estadoCiv`) VALUES
+(10, 'Anderson', 'Queiroz', '123456789012n', 'M', '1999-11-06', 12345, 'Moçambicano', 'Solteiro');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pagamento`
+-- Table structure for table `pagamento`
 --
 
 CREATE TABLE `pagamento` (
@@ -259,19 +245,10 @@ CREATE TABLE `pagamento` (
   `salarioLiquido` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `pagamento`
---
-
-INSERT INTO `pagamento` (`id`, `Nome`, `horasExtras`, `Faltas`, `bonus`, `desconto`, `dataPagamento`, `salarioBruto`, `salarioLiquido`) VALUES
-(1, 'Henry', 6, 2, 2, 2, NULL, '0', '0'),
-(3, 'James', 1, 2, 3, 4, NULL, '1200', '1080'),
-(2, 'Mister', 2, 3, 3, 2, NULL, '0', '0');
-
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `planosaude`
+-- Table structure for table `planosaude`
 --
 
 CREATE TABLE `planosaude` (
@@ -281,36 +258,29 @@ CREATE TABLE `planosaude` (
   `nrAgre` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `planosaude`
+--
+
+INSERT INTO `planosaude` (`idFuncionario`, `dataInicio`, `dataFim`, `nrAgre`) VALUES
+(10, '2019-11-06', '2020-11-06', 4);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `professor`
+-- Table structure for table `professor`
 --
 
 CREATE TABLE `professor` (
   `idFuncionario` int(4) NOT NULL,
   `totalTurma` int(2) DEFAULT NULL,
-  `totalProf` int(11) NOT NULL
+  `disciplina` varchar(45) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Acionadores `professor`
---
-DELIMITER $$
-CREATE TRIGGER `AFTER_DELETE_professor` AFTER DELETE ON `professor` FOR EACH ROW BEGIN
-  update professor d
-  set totalProf
-  = totalProf-1;
-
-
-end
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `remuneracao`
+-- Table structure for table `remuneracao`
 --
 
 CREATE TABLE `remuneracao` (
@@ -327,13 +297,6 @@ CREATE TABLE `remuneracao` (
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `administrador`
---
-ALTER TABLE `administrador`
-  ADD PRIMARY KEY (`idFuncionario`),
-  ADD KEY `administrador_ibfk_1` (`idCargo`);
 
 --
 -- Indexes for table `cargo`
@@ -363,7 +326,8 @@ ALTER TABLE `formacao`
 -- Indexes for table `funcionario`
 --
 ALTER TABLE `funcionario`
-  ADD PRIMARY KEY (`idFuncionario`);
+  ADD PRIMARY KEY (`idFuncionario`),
+  ADD UNIQUE KEY `idFuncionario` (`idFuncionario`);
 
 --
 -- Indexes for table `pagamento`
@@ -382,7 +346,7 @@ ALTER TABLE `planosaude`
 -- Indexes for table `professor`
 --
 ALTER TABLE `professor`
-  ADD PRIMARY KEY (`idFuncionario`);
+  ADD UNIQUE KEY `idFuncionario` (`idFuncionario`) USING BTREE;
 
 --
 -- Indexes for table `remuneracao`
@@ -404,7 +368,7 @@ ALTER TABLE `cargo`
 -- AUTO_INCREMENT for table `funcionario`
 --
 ALTER TABLE `funcionario`
-  MODIFY `idFuncionario` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFuncionario` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `pagamento`
@@ -417,43 +381,37 @@ ALTER TABLE `pagamento`
 --
 
 --
--- Limitadores para a tabela `administrador`
---
-ALTER TABLE `administrador`
-  ADD CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`idCargo`) REFERENCES `cargo` (`idCargo`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Limitadores para a tabela `contracto`
+-- Constraints for table `contracto`
 --
 ALTER TABLE `contracto`
   ADD CONSTRAINT `contracto_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
 
 --
--- Limitadores para a tabela `experiencia`
+-- Constraints for table `experiencia`
 --
 ALTER TABLE `experiencia`
   ADD CONSTRAINT `experiencia_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
 
 --
--- Limitadores para a tabela `formacao`
+-- Constraints for table `formacao`
 --
 ALTER TABLE `formacao`
   ADD CONSTRAINT `formacao_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
 
 --
--- Limitadores para a tabela `planosaude`
+-- Constraints for table `planosaude`
 --
 ALTER TABLE `planosaude`
   ADD CONSTRAINT `idFuncionario` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `professor`
+-- Constraints for table `professor`
 --
 ALTER TABLE `professor`
   ADD CONSTRAINT `idFuncioanario` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `remuneracao`
+-- Constraints for table `remuneracao`
 --
 ALTER TABLE `remuneracao`
   ADD CONSTRAINT `remuneracao_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);

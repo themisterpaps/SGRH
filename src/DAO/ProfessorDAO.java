@@ -1,6 +1,7 @@
 package DAO;
 
 import VO.AdminVO;
+import VO.ProfessorVO;
 import control.BDconexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,26 +12,25 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AdminDAO {
+public class ProfessorDAO {
     private Connection conexao;
     
-    public AdminDAO(){
+    public ProfessorDAO(){
         try {
             this.conexao = BDconexao.getConnection();
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfessorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void inserir(AdminVO a){
-        String sql = "INSERT INTO admin(idFuncionario,cargo,username,password) VALUES(?,?,?,?)";
+    public void inserir(ProfessorVO p){
+        String sql = "INSERT INTO professor(idFuncionario,disciplina, totalTurma) VALUES(?,?,?)";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
             DadosPessoaisDAO dao = new DadosPessoaisDAO();
             ps.setInt(1, dao.getId());
-            ps.setString(2, a.getCargo());
-            ps.setString(3, a.getUsername());
-            ps.setString(4, a.getPassword());
+            ps.setString(2, p.getDisciplina());
+            ps.setInt(3, p.getNrTurmas());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {

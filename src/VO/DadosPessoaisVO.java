@@ -1,8 +1,32 @@
 package VO;
-public class DadosPessais1 {
+
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import view.MenuPrincipal;
+
+public class DadosPessoaisVO {
     private String nome, apelido,nacionalidade, bi, estCivil, data, sexo;
     private int nib, nuit;
 
+    public DadosPessoaisVO(String nome, String apelido, String nacionalidade, String bi, String estCivil, String data, String sexo, int nib, int nuit) {
+        this.nome = nome;
+        this.apelido = apelido;
+        this.nacionalidade = nacionalidade;
+        this.bi = bi;
+        this.estCivil = estCivil;
+        this.data = data;
+        this.sexo = sexo;
+        this.nib = nib;
+        this.nuit = nuit;
+    }
+    
+    public DadosPessoaisVO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -72,18 +96,6 @@ public class DadosPessais1 {
     }
 
     public void setNuit(int nuit) {
-        this.nuit = nuit;
-    }
-
-    public DadosPessais1(String nome, String apelido, String nacionalidade, String bi, String estCivil, String data, String sexo, int nib, int nuit) {
-        this.nome = nome;
-        this.apelido = apelido;
-        this.nacionalidade = nacionalidade;
-        this.bi = bi;
-        this.estCivil = estCivil;
-        this.data = data;
-        this.sexo = sexo;
-        this.nib = nib;
         this.nuit = nuit;
     }
 }
