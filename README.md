@@ -18,7 +18,7 @@ Como referência foca-se, como ponto de partida num centro de explicação, tent
 
 ## Requisitos
 - [Java developement Kit 8 update 191](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html);
-- [Java developement Kit 7 (for iReport)] (https://filehippo.com/download_java_development_kit_64/&usg=AFQjCNFlVsk15uj_Ll8bvl2Ug53zfEvqgw)
+- [Java developement Kit 7 (for iReport)] (https://www.technize.net/java-7-update-21/) (https://filehippo.com/download_java_development_kit_64/&usg=AFQjCNFlVsk15uj_Ll8bvl2Ug53zfEvqgw)
 - [Net Beans 8.0.2](https://www.netbeans.com/) (recomended);
 - [JDBC - Java Database Base Connector version 5.1.23](https://dev.mysql.com/downloads/connector/j/);
 - [iReport Libs](https://sourceforge.net/projects/jasperreports/);
