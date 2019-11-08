@@ -1,9 +1,18 @@
 package view;
 
+import control.BDconexao;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class MenuPrincipal extends JFrame{
     
@@ -75,6 +84,24 @@ public class MenuPrincipal extends JFrame{
                 }
             });
          btn[2]=new JButton("Relatorio");
+         btn[2].addActionListener(new ActionListener(){ 
+            public void actionPerformed(ActionEvent event){
+                try {
+                    Connection c=BDconexao.getConnection();
+                    String src="report1.jasper";
+                    JasperPrint jaspertPrint=null;
+                    jaspertPrint = JasperFillManager.fillReport(src, null,c);
+                    JasperViewer v=new JasperViewer(jaspertPrint,false);
+                    v.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JRException ex) {
+                    Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+            });
          btn[3]=new JButton("Sair");
          btn[3].addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
