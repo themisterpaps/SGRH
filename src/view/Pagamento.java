@@ -127,8 +127,9 @@ public class Pagamento extends JFrame {
         model.addColumn("Faltas");
         model.addColumn("Bonus");
         model.addColumn("Descontos");
-        model.addColumn("Salario Bruto");
         model.addColumn("Salario Liquido");
+        model.addColumn("Salario Bruto");
+        
         criartabela();
         table = new JTable(model);
         table.setPreferredScrollableViewportSize(new Dimension(700,200));
@@ -166,8 +167,8 @@ public class Pagamento extends JFrame {
                     a=""+sp[4].getValue();
                     pg.setDesconto(Integer.parseInt(a));
                     
-                    pg.setSalariobruto((float) (1200+0.1*pg.getBonus()));
-                    pg.setSalarioLiquido((float) (pg.getSalariobruto()*(1-0.1)));
+                    pg.setSalariobruto((float) (20000+ 100*pg.getBonus()-100*pg.getDesconto()));
+                    pg.setSalarioLiquido((float) (pg.getSalariobruto()*(1-0.3)));
                     PagamentoDAO pgs=new PagamentoDAO();
                     pgs.inserir(pg);
                     setVisible(false);
