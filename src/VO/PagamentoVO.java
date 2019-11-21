@@ -10,7 +10,7 @@ package VO;
  * @author Chigumane
  */
 public class PagamentoVO {
-    String nome;
+    String id;
     int horasExtras,faltas,bonus,desconto;
     float salariobruto,salarioLiquido;
     //Salario Bruto é um atributo derivado 
@@ -18,8 +18,8 @@ public class PagamentoVO {
     public PagamentoVO() {
     }
 
-    public PagamentoVO(String nome, int horasExtras, int faltas, int bonus, int desconto, float salariobruto, float salarioLiquido) {
-        this.nome = nome;
+    public PagamentoVO(String id, int horasExtras, int faltas, int bonus, int desconto, float salariobruto, float salarioLiquido) {
+        this.id = id;
         this.horasExtras = horasExtras;
         this.faltas = faltas;
         this.bonus = bonus;
@@ -28,12 +28,12 @@ public class PagamentoVO {
         this.salarioLiquido = salarioLiquido;
     }
 
-    public String getNome() {
-        return nome;
+    public String getid() {
+        return id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setid(String id) {
+        this.id = id;
     }
 
     public int getHorasExtras() {

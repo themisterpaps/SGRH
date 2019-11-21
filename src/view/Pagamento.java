@@ -75,12 +75,12 @@ public class Pagamento extends JFrame {
     }
 
     private void pagamento() {
-        l[0] = new JLabel("Nome:                 ");
+        l[0] = new JLabel("id:                 ");
         l[1] = new JLabel("Horas Extras:       ");
         l[2] = new JLabel("Numero deFaltas: ");
         l[3] = new JLabel("Bonificacão:        ");
         l[4] = new JLabel("Desconto:            ");
-        l[5] = new JLabel("Nome Completo:   ");
+        l[5] = new JLabel("id Completo:   ");
           //Label Propriedade
         for(int i=0;i<=5;i++){
          l[i].setFont(label_Font);
@@ -95,7 +95,7 @@ public class Pagamento extends JFrame {
         //Linha 1
         p[1]=new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
 
-        tf[0]=new JTextField("Nome",16);
+        tf[0]=new JTextField("id",16);
         p[1].add(l[0]);
         p[1].add(tf[0]);
         
@@ -122,7 +122,7 @@ public class Pagamento extends JFrame {
         //Jtable
         p[7]=new JPanel(new FlowLayout(FlowLayout.CENTER,700,100));
 
-        model.addColumn("Nome");
+        model.addColumn("id");
         model.addColumn("Horas Extra");
         model.addColumn("Faltas");
         model.addColumn("Bonus");
@@ -152,9 +152,11 @@ public class Pagamento extends JFrame {
         proximo.addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
                 try {
-                    
+                    PagamentoDAO dh =new PagamentoDAO();
+                    if(dh.verificar(tf[0].getText())){
+                        
                     PagamentoVO pg=new PagamentoVO();
-                    pg.setNome(tf[0].getText());
+                    pg.setid(tf[0].getText());
                     String a=""+sp[1].getValue();
                     pg.setHorasExtras(Integer.parseInt(a));
                     a=""+sp[2].getValue();
@@ -169,7 +171,7 @@ public class Pagamento extends JFrame {
                     PagamentoDAO pgs=new PagamentoDAO();
                     pgs.inserir(pg);
                     setVisible(false);
-                    Pagamento ad=new Pagamento();
+                    Pagamento ad=new Pagamento();}
                 } catch (SQLException ex) {
                     Logger.getLogger(Pagamento.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -218,7 +220,7 @@ public class Pagamento extends JFrame {
             a=(ArrayList<PagamentoVO>) dao.todos();
             String[] dados=new String[7];
             for(int i=0;i<a.size();i++){
-                dados[0]=""+a.get(i).getNome();
+                dados[0]=""+a.get(i).getid();
                 dados[1]=""+a.get(i).getHorasExtras();
                 dados[2]=""+a.get(i).getFaltas();
                 dados[3]=""+a.get(i).getBonus();
@@ -234,4 +236,7 @@ public class Pagamento extends JFrame {
         }
      
     }
+   
+    
+   
 }

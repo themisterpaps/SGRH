@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import control.BDconexao;
+import java.awt.HeadlessException;
+import view.MenuPrincipal;
 
 /**
  *
@@ -29,10 +31,10 @@ public class PagamentoDAO {
         this.conexao=BDconexao.getConnection();
     }
      public void inserir(PagamentoVO c){
-        String sql = "INSERT INTO pagamento (id, Nome, horasExtras, Faltas, bonus, desconto, salarioBruto, salarioLiquido) VALUES (NULL, ?, ?,?,?,?,?,?)";
+        String sql = "INSERT INTO pagamento (id, horasExtras, Faltas, bonus, desconto, salarioBruto, salarioLiquido) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setString(1, c.getNome());
+            ps.setString(1, c.getid());
             ps.setInt(2, c.getHorasExtras());
             ps.setInt(3, c.getFaltas());
             ps.setInt(4, c.getBonus());
@@ -60,13 +62,13 @@ public class PagamentoDAO {
     }
          public List<PagamentoVO> todos(){
         try {
-            String sql = "SELECT * FROM Pagamento ORDER BY pagamento.nome ASC";
+            String sql = "SELECT * FROM Pagamento ORDER BY pagamento.id ASC";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             List<PagamentoVO> lista = new ArrayList<>();
             while(rs.next()){
                 PagamentoVO ct=new PagamentoVO();
-                ct.setNome(rs.getString("nome"));
+                ct.setid(rs.getString("id"));
                 ct.setHorasExtras(rs.getInt("horasExtras"));
                 ct.setFaltas(rs.getInt("faltas"));
                 ct.setBonus(rs.getInt("bonus"));
@@ -87,7 +89,7 @@ public class PagamentoDAO {
             
             
             try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setString(7, c.getNome());
+            ps.setString(7, c.getid());
             ps.setInt(1, c.getHorasExtras());
             ps.setInt(2, c.getFaltas());
             ps.setInt(3, c.getBonus());
@@ -99,6 +101,37 @@ public class PagamentoDAO {
         } catch (SQLException ex) {
             Logger.getLogger(PagamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+              public Boolean verificar( String id) {
+                   boolean a = false;
+      
+            String sql = "select * from funcionario where idFuncionario=?";
+           try {   
+            conexao = control.BDconexao.getConnection();
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, id);
+           
+            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                a= true;
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "O Usuario nao existe","Erro", JOptionPane.ERROR_MESSAGE);
+                a= false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PagamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PagamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            conexao.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PagamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return a;
     }
     
 }
