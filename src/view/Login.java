@@ -127,7 +127,7 @@ public class Login extends JFrame {
     }
 
     public void logar() {
-        String sql = "select * from admin where username=? and password =?";
+        String sql = "select * from admin where username=? and password=?";
         try {
             conexao = control.BDconexao.getConnection();
             pst = conexao.prepareStatement(sql);

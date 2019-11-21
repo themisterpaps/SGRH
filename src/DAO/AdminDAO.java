@@ -38,6 +38,19 @@ public class AdminDAO {
         }
     }
     
+    public void apagar (){
+        String sql = "DELETE FROM administrador WHERE idFuncionario = ?";
+        try{ 
+         PreparedStatement ps = conexao.prepareStatement(sql);
+            DadosPessoaisDAO dao = new DadosPessoaisDAO();
+            ps.setInt(1, dao.getId());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /*public void actualizar(Admin a) {
         try {
             String sql = "UPDATE estudante SET nome = ?, apelido = ? WHERE cartao = ?";
@@ -45,18 +58,6 @@ public class AdminDAO {
             ps.setString(1, a.getNome());
             ps.setString(2, a.getApelido());
             ps.setInt(3, a.getCartao());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(EstudanteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void apagar (Admin a){
-        String sql = "DELETE FROM estudante WHERE cartao = ?";
-        try{ 
-         PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setInt(1, a.getCartao());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
