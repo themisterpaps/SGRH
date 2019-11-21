@@ -86,20 +86,7 @@ public class MenuPrincipal extends JFrame{
          btn[2]=new JButton("Relatorio");
          btn[2].addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
-                try {
-                    Connection c=BDconexao.getConnection();
-                    String src="report1.jasper";
-                    JasperPrint jaspertPrint=null;
-                    jaspertPrint = JasperFillManager.fillReport(src, null,c);
-                    JasperViewer v=new JasperViewer(jaspertPrint,false);
-                    v.setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (JRException ex) {
-                    Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               Relatorios rl =new Relatorios();
                 }
             });
          btn[3]=new JButton("Sair");

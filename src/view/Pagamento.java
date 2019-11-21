@@ -95,7 +95,7 @@ public class Pagamento extends JFrame {
         //Linha 1
         p[1]=new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
 
-        tf[0]=new JTextField("id",16);
+        tf[0]=new JTextField(null,16);
         p[1].add(l[0]);
         p[1].add(tf[0]);
         
