@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DadosPessoais extends JFrame {
+public class Actualizar extends JFrame {
     private String nome, apelido,nacionalidade, bi, estCivil, data, sexo;
     private int nib, nuit;
     private  DadosPessoaisVO dp;
@@ -21,8 +21,8 @@ public class DadosPessoais extends JFrame {
     
     JPanel p[] = new JPanel[8];
     JLabel l[] = new JLabel[10];
-    JTextField tf[] = new JTextField[5];
-    JRadioButton rb[] = new JRadioButton[6];
+    JTextField tf[] = new JTextField[10];
+    JRadioButton rb[] = new JRadioButton[10];
     ButtonGroup bg[] = new ButtonGroup[2];
     JSpinner sp[] = new JSpinner[5];
     JComboBox cb[] = new JComboBox[5];
@@ -32,8 +32,8 @@ public class DadosPessoais extends JFrame {
     Dimension dimensao_Btn;
     GridBagConstraints gbc = new GridBagConstraints();
 
-    public DadosPessoais() {
-        setTitle("Cadastro || S.G.R.H");
+    public Actualizar() {
+        setTitle("Actualizar || S.G.R.H");
         setLocation(250, 100);
         setSize(900, 700);
         setExtendedState(MAXIMIZED_BOTH);
@@ -83,7 +83,7 @@ public class DadosPessoais extends JFrame {
     private void dadosPessoais() {
         //Todas As Labels
         l[0] = new JLabel("Nome: ");
-        l[1] = new JLabel("Apelido:  ");;
+        l[1] = new JLabel("Apelido: ");
         l[2] = new JLabel("Bilhete de Identidade: ");
         l[3] = new JLabel("Sexo");
         l[4] = new JLabel("Data de Nascimento:");
@@ -91,8 +91,9 @@ public class DadosPessoais extends JFrame {
         l[6] = new JLabel("Nacionalidade:");
         l[7] = new JLabel("NUIT");
         l[8] = new JLabel("Estado Civil");
+        l[9] = new JLabel("ID:");
         //Label Propriedade
-        for (int i = 0; i <= 8; i++) {
+        for (int i = 0; i <= 9; i++) {
             l[i].setFont(label_Font);
             l[i].setForeground(blue);
             l[i].setBackground(white);
@@ -100,6 +101,7 @@ public class DadosPessoais extends JFrame {
 
         // Linha 1
         tf[0] = new JTextField("Nome", 16);
+        tf[9] = new JTextField("ID", 16);
         //Nome Placeholder
         tf[0].addFocusListener(new FocusListener() {
             @Override
@@ -113,6 +115,24 @@ public class DadosPessoais extends JFrame {
             public void focusLost(FocusEvent e) {
                 if(tf[0].getText().equals("")){
                     tf[0].setText("Nome");
+                    tf[0].setForeground(Color.GRAY);
+                }
+            }
+        });
+        
+             //Nome Placeholder ID
+        tf[0].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tf[0].getText().equalsIgnoreCase("ID")){
+                    tf[0].setText("");
+                    tf[0].setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(tf[0].getText().equals("")){
+                    tf[0].setText("ID");
                     tf[0].setForeground(Color.GRAY);
                 }
             }
@@ -144,6 +164,9 @@ public class DadosPessoais extends JFrame {
             p[1].add(l[i]);
             p[1].add(tf[i]);
         }
+        tf[9].setForeground(gray);
+        p[1].add(l[9]);
+        p[1].add(tf[9]);
 
         p[1].setBackground(white);
         gbc.gridx = 0;
@@ -374,7 +397,7 @@ public class DadosPessoais extends JFrame {
             setVisible(false);
             PlanoDeSaude pn = new PlanoDeSaude();
         } catch (ParseException ex) {
-            Logger.getLogger(DadosPessoais.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Actualizar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

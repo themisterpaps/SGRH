@@ -82,20 +82,29 @@ public class DadosPessoaisDAO {
         }
     }
     
-    /*public void actualizar(DadosPessoaisVO dp) {
+    public void actualizar(DadosPessoaisVO dp, String id) throws ParseException {
         try {
-            String sql = "UPDATE estudante SET nome = ?, apelido = ? WHERE cartao = ?";
+            String sql = "UPDATE funcionario SET nome = ?, bi = ?, sexo = ?, dataNasc =?, NIB = ?, nacionalidade = ?, estadoCiv = ? WHERE idFuncionario = 1";
             PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setString(1, a.getNome());
-            ps.setString(2, a.getApelido());
-            ps.setInt(3, a.getCartao());
+            
+            ps.setString(1, dp.getNome());
+            ps.setString(2, dp.getBi());
+            ps.setString(3, dp.getSexo());
+            String sDate1=dp.getData();  
+            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            java.sql.Date sDate = new java.sql.Date(date1.getTime());
+            ps.setDate(4, sDate);
+            ps.setInt(5, dp.getNib());
+            ps.setString(6, dp.getNacionalidade());
+            ps.setString(7, dp.getEstCivil());
+            // ps.setString(8, id);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(EstudanteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DadosPessoaisDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+   /* 
     public void apagar (DadosPessoaisVO dp){
         String sql = "DELETE FROM estudante WHERE cartao = ?";
         try{ 
