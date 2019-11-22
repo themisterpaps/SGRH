@@ -25,7 +25,7 @@ public class BDconexao implements Serializable {
         this.porta = "3306";
         this.BD = "sgrh";
         this.user = "root";
-        this.password = "";
+        this.password ="";
     }
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {

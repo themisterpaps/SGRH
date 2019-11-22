@@ -62,20 +62,30 @@ public class PlanoDeSaudeDAO {
         }
     }
     
-    /*public void actualizar(DadosPessoaisVO dp) {
+    public void actualizar(PlanoDeSaudeVO pds, String id) {
         try {
-            String sql = "UPDATE estudante SET nome = ?, apelido = ? WHERE cartao = ?";
-            PreparedStatement ps = conexao.prepareStatement(sql);
-            ps.setString(1, a.getNome());
-            ps.setString(2, a.getApelido());
-            ps.setInt(3, a.getCartao());
+            String sql = "UPDATE planosaude SET dataInicio = ?, dataFim = ? ,nrAgre = ? WHERE idFuncionario = ?";
+           PreparedStatement ps = conexao.prepareStatement(sql);
+            DadosPessoaisDAO dao = new DadosPessoaisDAO();
+            String sDate1=pds.getDataInicio();  
+            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            java.sql.Date sDate = new java.sql.Date(date1.getTime());
+            ps.setDate(1, sDate);
+            sDate1=pds.getDataFim();  
+            date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            sDate = new java.sql.Date(date1.getTime());
+            ps.setDate(2, sDate);
+            ps.setInt(3, pds.getNrAgre());
+            ps.setInt(4,Integer.parseInt(id) );
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(EstudanteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlanoDeSaudeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(PlanoDeSaudeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+  /*  
     public List<DadosPessoaisVO> todos(){
         try {
             String sql = "SELECT * from funcionario";

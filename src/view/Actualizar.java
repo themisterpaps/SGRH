@@ -330,14 +330,14 @@ public class Actualizar extends JFrame {
 
         //Butoes
         p[6] = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 25));
-        JButton cancelar = new JButton("Cancelar");
+        JButton cancelar = new JButton("Skip");
         cancelar.setBackground(orange);
         cancelar.setPreferredSize(new Dimension(120, 32));
         cancelar.setFont(new Font("Sans Serif", Font.BOLD, 14));
         cancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 setVisible(false);
-                MenuPrincipal m = new MenuPrincipal();
+                Actualizar2 ac=new Actualizar2();
             }
         });
 
@@ -349,10 +349,23 @@ public class Actualizar extends JFrame {
         proximo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 cadastro();
+                
+            }
+        });
+        
+        JButton concluir = new JButton("Concluir");
+        concluir.setBackground(blue);
+        concluir.setForeground(white);
+        concluir.setPreferredSize(new Dimension(120, 32));
+        concluir.setFont(new Font("Sans Serif", Font.BOLD, 14));
+        concluir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+               MenuPrincipal a = new MenuPrincipal();
             }
         });
         p[6].add(cancelar);
         p[6].add(proximo);
+        p[6].add(concluir);
 
         p[6].setBackground(white);
         gbc.fill = GridBagConstraints.NONE;
@@ -393,9 +406,9 @@ public class Actualizar extends JFrame {
             
             dp = new DadosPessoaisVO(nome,apelido,nacionalidade,bi,estCivil, data, sexo, nib, nuit);
             DadosPessoaisDAO dao = new DadosPessoaisDAO();
-            dao.inserir(dp);
+            dao.actualizar(dp, tf[9].getText());
             setVisible(false);
-            PlanoDeSaude pn = new PlanoDeSaude();
+            Actualizar2 ac=new Actualizar2();
         } catch (ParseException ex) {
             Logger.getLogger(Actualizar.class.getName()).log(Level.SEVERE, null, ex);
         }

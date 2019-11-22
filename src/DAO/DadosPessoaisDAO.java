@@ -97,7 +97,7 @@ public class DadosPessoaisDAO {
             ps.setInt(5, dp.getNib());
             ps.setString(6, dp.getNacionalidade());
             ps.setString(7, dp.getEstCivil());
-            // ps.setString(8, id);
+            ps.setString(8, id);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
