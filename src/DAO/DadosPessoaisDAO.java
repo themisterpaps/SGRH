@@ -84,20 +84,21 @@ public class DadosPessoaisDAO {
     
     public void actualizar(DadosPessoaisVO dp, String id) throws ParseException {
         try {
-            String sql = "UPDATE funcionario SET nome = ?, bi = ?, sexo = ?, dataNasc =?, NIB = ?, nacionalidade = ?, estadoCiv = ? WHERE idFuncionario = 1";
+            String sql = "UPDATE funcionario SET nome = ?, apelido = ?, bi = ?, sexo = ?, dataNasc =?, NIB = ?, nacionalidade = ?, estadoCiv = ? WHERE idFuncionario = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             
             ps.setString(1, dp.getNome());
-            ps.setString(2, dp.getBi());
-            ps.setString(3, dp.getSexo());
+            ps.setString(2, dp.getApelido());
+            ps.setString(3, dp.getBi());
+            ps.setString(4, dp.getSexo());
             String sDate1=dp.getData();  
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             java.sql.Date sDate = new java.sql.Date(date1.getTime());
-            ps.setDate(4, sDate);
-            ps.setInt(5, dp.getNib());
-            ps.setString(6, dp.getNacionalidade());
-            ps.setString(7, dp.getEstCivil());
-            ps.setString(8, id);
+            ps.setDate(5, sDate);
+            ps.setInt(6, dp.getNib());
+            ps.setString(7, dp.getNacionalidade());
+            ps.setString(8, dp.getEstCivil());
+            ps.setString(9, id);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
