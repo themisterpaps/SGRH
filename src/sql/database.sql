@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2019 at 08:35 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.2
+-- Generation Time: 21-Nov-2019 às 22:05
+-- Versão do servidor: 10.1.38-MariaDB
+-- versão do PHP: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -22,93 +22,10 @@ SET time_zone = "+00:00";
 -- Database: `sgrh`
 --
 
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `alocarPofessor` (`idTurmaA` INT(4), `idFun` INT(4))  BEGIN
-  declare a int;
-select count(*)
-into a
-from profesor p
-where p.idFuncionario=idFunA;
-if(a=1) then
-INSERT into profesorTurma
-VALUES(`idFun`, `idturma`);
-UPDATE profesor p
-set nrTurmas
-= nrTurmas + 1 where p.idFun=idFunA;
-end
-if;
-end$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrarFuncionario` (`idFuncionario` INT(4), `nome` VARCHAR(45), `apelido` VARCHAR(45), `bi` VARCHAR(15), `sexo` CHAR(1), `dataNasc` DATE, `nacionalidade` VARCHAR(45), `NIB` INT(35), `totalTurma` INT(2), `idDept` INT(4), `idCargo` INT(11), `dataInicio` DATE, `dataFim` DATE, `tipo` VARCHAR(45), `valHorasExtras` DECIMAL(4,2), `valFaltas` DECIMAL(4,2), `tel1` INT(11), `telFix` INT(11), `tel2` INT(11), `email` VARCHAR(45), `nomeDep` VARCHAR(45), `dataNascimento` DATE, `grauPar` VARCHAR(45), `ano` YEAR, `formacao` VARCHAR(45))  BEGIN
-  insert into funcionario
-  values(idFuncionario, nome, apelido, bi, sexo, dataNasc, NIB , nacionalidade, estadoCiv);
-  INSERT INTO `
-  profesor`
-  VALUES(idFuncionario, totalTurma);
-  INSERT INTO `
-  adminstrador`
-  VALUES(idFuncionario, idDept, idCargo);
-  INSERT INTO `
-  contracto`
-  VALUES(idFuncionario, dataInicio, dataFim, tipo,
-      valHorasExtras, valFaltas);
-  INSERT INTO `
-  contacto`
-  VALUES(idFuncionario, tel1, telFix, tel2, email);
-  insert into `
-  dependentes`
-  values(idFuncionario, nomeDep, dataNascimento, grauPar);
-  insert into `
-  formacao`
-  values(idFuncionario, ano, formacao);
-  END$$
-
---
--- Functions
---
-CREATE DEFINER=`root`@`localhost` FUNCTION `calculodoIRPS` () RETURNS DECIMAL(8,2) BEGIN
-    Declare sumSalario int;
-  Declare a int;
-select count(*)
-into a
-from remunercao
-where YEAR(data)=2019;
-if( a=12) then
-select sum(salarioBruto)
-into sumSalario
-from remunercao
-where YEAR(data)=2019;
-end
-if;
-	IF (sumSalario<4200) then
-return (select sumSalario*(1-0, 1)
-);
-			else
-IF(sumSalario<168000) then
-return sumSalario*(1-0,15);
-else
-if(sumSalario<504000) then
-return sumSalario*(1-0,20);
-else
-return sumSalario*(1-0,25)
-;
-end
-if;
-		end
-if;
-	end
-if;
-	end$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Estrutura da tabela `admin`
 --
 
 CREATE TABLE `admin` (
@@ -119,7 +36,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `admin`
+-- Extraindo dados da tabela `admin`
 --
 
 INSERT INTO `admin` (`idFuncionario`, `cargo`, `username`, `password`) VALUES
@@ -128,7 +45,7 @@ INSERT INTO `admin` (`idFuncionario`, `cargo`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cargo`
+-- Estrutura da tabela `cargo`
 --
 
 CREATE TABLE `cargo` (
@@ -141,7 +58,7 @@ CREATE TABLE `cargo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contracto`
+-- Estrutura da tabela `contracto`
 --
 
 CREATE TABLE `contracto` (
@@ -152,16 +69,22 @@ CREATE TABLE `contracto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `contracto`
+-- Extraindo dados da tabela `contracto`
 --
 
 INSERT INTO `contracto` (`idFuncionario`, `dataInicio`, `dataFim`, `tipo`) VALUES
-(10, '2019-11-06', '2025-11-06', 'C');
+(1, '2018-11-23', '2020-11-29', 'A'),
+(7, '2018-12-04', '2020-10-21', 'B'),
+(9, '2019-06-11', '2020-11-25', 'A'),
+(10, '2019-11-06', '2025-11-06', 'C'),
+(11, '2019-11-20', '2020-11-20', 'A'),
+(18, '2015-11-13', '2020-11-20', 'B'),
+(19, '2013-11-28', '2019-11-30', 'A');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `experiencia`
+-- Estrutura da tabela `experiencia`
 --
 
 CREATE TABLE `experiencia` (
@@ -175,7 +98,7 @@ CREATE TABLE `experiencia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `experiencia`
+-- Extraindo dados da tabela `experiencia`
 --
 
 INSERT INTO `experiencia` (`idFuncionario`, `nomeEmpresa`, `anoExperiencia`, `cargo`, `areaFormacao`, `dataInicio`, `dataFim`) VALUES
@@ -184,7 +107,7 @@ INSERT INTO `experiencia` (`idFuncionario`, `nomeEmpresa`, `anoExperiencia`, `ca
 -- --------------------------------------------------------
 
 --
--- Table structure for table `formacao`
+-- Estrutura da tabela `formacao`
 --
 
 CREATE TABLE `formacao` (
@@ -196,7 +119,7 @@ CREATE TABLE `formacao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `formacao`
+-- Extraindo dados da tabela `formacao`
 --
 
 INSERT INTO `formacao` (`idFuncionario`, `dataInicio`, `dataFIm`, `nivel`, `nomeFormacao`) VALUES
@@ -205,7 +128,7 @@ INSERT INTO `formacao` (`idFuncionario`, `dataInicio`, `dataFIm`, `nivel`, `nome
 -- --------------------------------------------------------
 
 --
--- Table structure for table `funcionario`
+-- Estrutura da tabela `funcionario`
 --
 
 CREATE TABLE `funcionario` (
@@ -221,21 +144,33 @@ CREATE TABLE `funcionario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `funcionario`
+-- Extraindo dados da tabela `funcionario`
 --
 
 INSERT INTO `funcionario` (`idFuncionario`, `nome`, `apelido`, `bi`, `sexo`, `dataNasc`, `NIB`, `nacionalidade`, `estadoCiv`) VALUES
-(10, 'Anderson', 'Queiroz', '123456789012n', 'M', '1999-11-06', 12345, 'Moçambicano', 'Solteiro');
+(1, 'Carlos', 'Jonas', '12345678901b', 'M', '2019-11-05', 121231289, 'Mozambican', 'Casado'),
+(2, 'Jonas', 'Fill', '12345678901c', 'M', '2019-11-15', 1234536578, 'Mozambican', 'Casado'),
+(6, 'Jonas', 'Fill', '12345678901c', 'M', '2017-10-15', 2147483647, 'Mozambican', 'Casado'),
+(7, 'Sara', 'Da Silva', '12345678901c', 'F', '2016-12-15', 2147483647, 'Mozambican', 'Casado'),
+(8, 'Jonas', 'João', '12345678901c', 'M', '2015-03-15', 2147483647, 'Mozambican', 'Casado'),
+(9, 'Anabella', 'Kali', '12345678901c', 'F', '2012-01-15', 2147483647, 'Mozambican', 'Casado'),
+(10, 'Anderson', 'Queiroz', '123456789012n', 'M', '1999-11-06', 12345, 'Moçambicano', 'Solteiro'),
+(11, 'Argentina', 'Cossa', '12345678901c', 'F', '2019-12-15', 234536578, 'Mozambican', 'Casado'),
+(16, 'Debian', 'Done', '12345678901c', 'M', '2017-10-15', 2147483647, 'Mozambican', 'Solteiro'),
+(17, 'Fedora', 'Great', '12345678901c', 'F', '2016-12-15', 2147483647, 'Mozambican', 'Casado'),
+(18, 'Ubuntu', 'João', '12345678901c', 'M', '2015-03-15', 2147483647, 'Mozambican', 'Casado'),
+(19, 'Kali', 'Anabella', '12345678901c', 'F', '2012-01-15', 2147483647, 'Mozambican', 'Casado'),
+(20, 'José', 'Raquell', '12345678901c', 'F', '2011-01-15', 2147483647, 'Mozambican', 'Solteiro'),
+(21, 'Argentina', 'Cossa', '12345678901c', 'F', '2019-12-15', 234536578, 'Mozambican', 'Solteiro');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pagamento`
+-- Estrutura da tabela `pagamento`
 --
 
 CREATE TABLE `pagamento` (
   `id` int(11) NOT NULL,
-  `Nome` varchar(11) NOT NULL,
   `horasExtras` int(11) NOT NULL,
   `Faltas` int(11) NOT NULL,
   `bonus` int(11) NOT NULL,
@@ -245,10 +180,17 @@ CREATE TABLE `pagamento` (
   `salarioLiquido` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `pagamento`
+--
+
+INSERT INTO `pagamento` (`id`, `horasExtras`, `Faltas`, `bonus`, `desconto`, `dataPagamento`, `salarioBruto`, `salarioLiquido`) VALUES
+(10, 3, 4, 2, 1, NULL, '20100', '14070');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `planosaude`
+-- Estrutura da tabela `planosaude`
 --
 
 CREATE TABLE `planosaude` (
@@ -259,7 +201,7 @@ CREATE TABLE `planosaude` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `planosaude`
+-- Extraindo dados da tabela `planosaude`
 --
 
 INSERT INTO `planosaude` (`idFuncionario`, `dataInicio`, `dataFim`, `nrAgre`) VALUES
@@ -268,7 +210,7 @@ INSERT INTO `planosaude` (`idFuncionario`, `dataInicio`, `dataFim`, `nrAgre`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `professor`
+-- Estrutura da tabela `professor`
 --
 
 CREATE TABLE `professor` (
@@ -280,7 +222,7 @@ CREATE TABLE `professor` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `remuneracao`
+-- Estrutura da tabela `remuneracao`
 --
 
 CREATE TABLE `remuneracao` (
@@ -333,8 +275,7 @@ ALTER TABLE `funcionario`
 -- Indexes for table `pagamento`
 --
 ALTER TABLE `pagamento`
-  ADD PRIMARY KEY (`Nome`),
-  ADD UNIQUE KEY `key` (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `planosaude`
@@ -368,50 +309,50 @@ ALTER TABLE `cargo`
 -- AUTO_INCREMENT for table `funcionario`
 --
 ALTER TABLE `funcionario`
-  MODIFY `idFuncionario` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `pagamento`
---
-ALTER TABLE `pagamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idFuncionario` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `contracto`
+-- Limitadores para a tabela `contracto`
 --
 ALTER TABLE `contracto`
   ADD CONSTRAINT `contracto_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
 
 --
--- Constraints for table `experiencia`
+-- Limitadores para a tabela `experiencia`
 --
 ALTER TABLE `experiencia`
   ADD CONSTRAINT `experiencia_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
 
 --
--- Constraints for table `formacao`
+-- Limitadores para a tabela `formacao`
 --
 ALTER TABLE `formacao`
   ADD CONSTRAINT `formacao_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);
 
 --
--- Constraints for table `planosaude`
+-- Limitadores para a tabela `pagamento`
+--
+ALTER TABLE `pagamento`
+  ADD CONSTRAINT `id` FOREIGN KEY (`id`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `planosaude`
 --
 ALTER TABLE `planosaude`
   ADD CONSTRAINT `idFuncionario` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `professor`
+-- Limitadores para a tabela `professor`
 --
 ALTER TABLE `professor`
   ADD CONSTRAINT `idFuncioanario` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `remuneracao`
+-- Limitadores para a tabela `remuneracao`
 --
 ALTER TABLE `remuneracao`
   ADD CONSTRAINT `remuneracao_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`);

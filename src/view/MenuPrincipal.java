@@ -16,9 +16,9 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class MenuPrincipal extends JFrame{
     
-    JButton btn[]=new JButton[4];
+    JButton btn[]=new JButton[5];
     JLabel menu_Label;
-    JPanel p[]=new JPanel[4];
+    JPanel p[]=new JPanel[5];
     
     //Default
     Font titulo_Font,Butoes_Font;
@@ -89,14 +89,20 @@ public class MenuPrincipal extends JFrame{
                Relatorios rl =new Relatorios();
                 }
             });
-         btn[3]=new JButton("Sair");
+         btn[3]=new JButton("Actualizar Dados");
          btn[3].addActionListener(new ActionListener(){ 
+            public void actionPerformed(ActionEvent event){
+               Actualizar rl =new Actualizar();
+                }
+            });
+         btn[4]=new JButton("Sair");
+         btn[4].addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent event){
                 setVisible(false);
                 Login lg=new Login();
                 }
             });
-        for(int i=0;i<4;i++){
+        for(int i=0;i<=4;i++){
             btn[i].setPreferredSize(dimensao_Btn);
             btn[i].setFont(Butoes_Font);
             btn[i].setBackground(orange);

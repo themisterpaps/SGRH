@@ -88,10 +88,25 @@ public class Pagamento extends JFrame {
          l[i].setBackground(white);
         }
         
-        for(int i=0;i<=4;i++){
-            sp[i] = new JSpinner();
-            sp[i].setPreferredSize(new Dimension(180,18));
-            }
+    
+            sp[1] = new JSpinner();
+            sp[1].setPreferredSize(new Dimension(180,18));
+           
+          SpinnerNumberModel m0=new SpinnerNumberModel(0,0,20,1);
+          SpinnerNumberModel m2=new SpinnerNumberModel(0,0,20,1);
+        
+                  
+          SpinnerNumberModel m=new SpinnerNumberModel(0,0,10,0.2);
+          SpinnerNumberModel m1=new SpinnerNumberModel(0,0,10,0.2);
+            sp[1] = new JSpinner(m0);
+            sp[1].setPreferredSize(new Dimension(180,18));
+            sp[2] = new JSpinner(m2);
+            sp[2].setPreferredSize(new Dimension(180,18));
+          
+         sp[3] = new JSpinner(m1);
+         sp[3].setPreferredSize(new Dimension(180,18));
+         sp[4] = new JSpinner(m);
+         sp[4].setPreferredSize(new Dimension(180,18));
         //Linha 1
         p[1]=new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
 
