@@ -116,6 +116,7 @@ public class Login extends JFrame {
         bt.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
+                /* Verify Admin Userrs*/
                 logar();
             }
         });
@@ -127,23 +128,31 @@ public class Login extends JFrame {
     }
 
     public void logar() {
-        String sql = "select * from admin where username=? and password=?";
-        try {
-            conexao = control.BDconexao.getConnection();
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, tf[0].getText());
-            pst.setString(2, ps.getText());
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                MenuPrincipal m = new MenuPrincipal();
-                setVisible(false);
-                this.dispose();
-                conexao.close();
-            } else {
-                JOptionPane.showMessageDialog(null, "usuário e/ou senha inválido(s)","Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (HeadlessException | SQLException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
+        /////////////////* Without DB Connection*///////////////////////////
+        
+        MenuPrincipal m = new MenuPrincipal();
+        setVisible(false);
+         /////////////////*DB Connection*///////////////////////////
+//        String sql = "select * from admin where username=? and password=?";
+//        try {
+//           
+//           
+//            
+//            conexao = control.BDconexao.getConnection();
+//            pst = conexao.prepareStatement(sql);
+//            pst.setString(1, tf[0].getText());
+//            pst.setString(2, ps.getText());
+//            rs = pst.executeQuery();
+//            if (rs.next()) {
+//                MenuPrincipal m = new MenuPrincipal();
+//                setVisible(false);
+//                this.dispose();
+//                conexao.close();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "usuário e/ou senha inválido(s)","Erro", JOptionPane.ERROR_MESSAGE);
+//            }
+//        } catch (HeadlessException | SQLException | ClassNotFoundException e) {
+//            JOptionPane.showMessageDialog(this, e);
+//        }
     }
 }
