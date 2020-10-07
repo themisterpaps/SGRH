@@ -1,6 +1,7 @@
 package VO;
 
 public class AdminVO {
+    
     private String cargo, username, password;
     
     public AdminVO(String cargo, String username, String password){

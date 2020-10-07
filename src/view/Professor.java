@@ -111,7 +111,7 @@ public class Professor extends JFrame {
         add(p[1], gbc);
         
         
-        //Linha 2        
+        //Linha #2        
         p[2] = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         
         p[2].add(l[2]);

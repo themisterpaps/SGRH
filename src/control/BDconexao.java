@@ -23,7 +23,7 @@ public class BDconexao implements Serializable {
     public BDconexao() {
         this.Host = "localhost"; // 127.0.0.1 = localhost
         this.porta = "3306";
-        this.BD = "sgrh";
+        this.BD = "sgrh"; //nome da BD
         this.user = "root";
         this.password ="";
     }
