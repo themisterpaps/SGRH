@@ -2,7 +2,7 @@
 <img src="img/sgrh--green.png" width="150px" alt="Database Schema">
 </p>
 
-# Sistema de Gestao de Rescursos Humanos
+# Sistema de Gestao de Rescursos Humanos (Academic Project)
 ## Descrição
 Recursos Humanos é um requisito que sem ele não existe empresa/instituição nenhuma.
 Este Sistema (SGRH) tem como objectivo simplificar/melhorar a vida dos gestores de recursos no concerne a distribuição das várias áreas e funcionalidades de uma determinada empresa. _Um "Sistema de Gestão de Recursos Humanos é um conjunto de acções que visam planejar, recrutar e seleccionar pessoas, analise e descrição de cargas e funções."_
